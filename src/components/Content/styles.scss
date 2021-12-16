@@ -1,0 +1,46 @@
+@import url('https://fonts.googleapis.com/css2?family=Antic+Slab&family=Nanum+Gothic+Coding&family=Playfair+Display:wght@700&family=Unica+One&display=swap');
+
+.content {
+    min-height: 200px;
+}
+
+.title {
+    font-size: 50px;
+    position: absolute;
+    right: 200px;
+    font-family: 'Antic Slab', sans-serif;
+}
+
+.project-container {
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.project-infos {
+    height: 100%;
+    margin-right: 100px;
+    flex: 2;
+    display: flex;
+    flex-direction: column;
+}
+
+.project-name {
+    font-size: 75px;
+    margin-top: 200px;
+    font-family: 'Nanum Gothic Coding';
+}
+
+.project-desc {
+    font-size: 30px;
+    text-align: justify;
+}
+
+.project-pictures {
+    flex: 3;
+}
+
+.project-infos, .project-pictures {
+    width: 50vw;
+}

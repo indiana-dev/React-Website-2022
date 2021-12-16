@@ -1,24 +1,30 @@
-import logo from './logo.svg';
 import './App.css';
+import { useState } from 'react';
+import TopPage from './components/TopPage';
+import smoothScroll from './hooks/useSmoothScroll';
+import Content from './components/Content';
+import Cursor from './components/Cursor';
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+  let [loader, setLoader] = useState(true)
+
+  // useEffect(() => {
+  //   smoothScroll("#content-scroll")
+  // })
+
+  return (<div>
+    {/* <div className="App">
+      <div className='scroll-container'> */}
+      <div id="viewport">
+        <div id="content-scroll">
+        {/* <Navbar /> */}
+        <Cursor />
+        <TopPage />
+        <Content />
+        <div style={{height: 2000}}></div>
+      </div>
+      {/* <Loader setLoaderState={setLoader} /> */}
+    </div></div>
   );
 }
 
