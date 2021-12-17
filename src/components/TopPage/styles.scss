@@ -1,15 +1,26 @@
 @import url('https://fonts.googleapis.com/css2?family=Antic+Slab&family=Playfair+Display:wght@700&family=Unica+One&display=swap');
 
 .top {
-    padding: 200px 0 0;
+    height: 100vh;
     overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
 .name {
-    font-size: 250px;
-    letter-spacing: 5px;
+    font-size: 15vw;
+    // letter-spacing: 5px;
     text-align: left;
-    line-height: 250px;
+    // line-height: 250px;
     font-family: 'Unica One', cursive;
-    margin: 0 100px;
+    margin: 0 10vw;
+}
+
+.title {
+    font-size: 3.5vw;
+    position: absolute;
+    right: 10vw;
+    font-family: 'Antic Slab', sans-serif;
+    color: #ffc1c1;
 }

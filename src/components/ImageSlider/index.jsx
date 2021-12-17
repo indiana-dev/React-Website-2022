@@ -1,22 +1,23 @@
 import './styles.scss'
-import myImage from '../../assets/img.png'
 import { useEffect, useRef } from 'react'
 import gsap from 'gsap/all'
 
 export default function ImageSlider({
     direction,
-    horizontal_align
+    horizontal_align,
+    containerRef,
+    offset,
+    project,
 }) {
     const vh = window.innerHeight
     const slider = useRef()
 
     useEffect(() => {
         const elmHeight = slider.current.clientHeight
-        console.log(elmHeight, 'h')
         let tl = gsap.timeline({
             scrollTrigger: {
-            trigger: '.project-container',
-            start: 'top top',
+            trigger: containerRef.current,
+            start: offset ? window.innerHeight/2 + offset - 300 : 'top top',
             scrub: 0.5,
             end: "+=" + (2000-vh),
             // markers: true,  
@@ -38,15 +39,18 @@ export default function ImageSlider({
     function createImages() {
         let images = []
 
-        for (let i = 0; i < 4; i++)
-            images.push(<img src={myImage} id={"img_"+i} key={'img_'+i}></img>)
+        for (let i = 0; i < project.imagesCount/2; i++) {
+            let imagePath = 'assets/images/' + project.imagesPath + '/' + (horizontal_align==='left' ? i : project.imagesCount-i-1) + '.png'
+            images.push(<img src={imagePath} key={imagePath} alt=""></img>)
+        }
         
         return images
     }
 
-    return <div className="image-slider" ref={slider}
-     style={{'left': (horizontal_align === 'left' ? 100 : 500)}}
-     >
+    return <div className="image-slider" 
+                ref={slider}
+                style={horizontal_align === 'left' ? {left: '2vw'} : {right: '2vw'}}
+            >
         {createImages()}
     </div>
 }

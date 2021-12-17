@@ -2,8 +2,9 @@ import './App.css';
 import { useState } from 'react';
 import TopPage from './components/TopPage';
 import smoothScroll from './hooks/useSmoothScroll';
-import Content from './components/Content';
 import Cursor from './components/Cursor';
+import Project from './components/Project';
+import ProjectManager from './components/ProjectManager';
 
 function App() {
   let [loader, setLoader] = useState(true)
@@ -20,8 +21,8 @@ function App() {
         {/* <Navbar /> */}
         <Cursor />
         <TopPage />
-        <Content />
-        <div style={{height: 2000}}></div>
+        <ProjectManager />
+        {/* <div style={{height: 2000}}></div> */}
       </div>
       {/* <Loader setLoaderState={setLoader} /> */}
     </div></div>
