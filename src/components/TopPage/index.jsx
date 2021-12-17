@@ -1,7 +1,8 @@
-import gsap from "gsap/all";
+import gsap, { ScrollToPlugin } from "gsap/all";
 import ScrollTrigger from "gsap/ScrollTrigger";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { SplitText } from '../../libraries/Split3.min'
+import { FaChevronDown } from 'react-icons/fa';
 
 import './styles.scss'
 
@@ -14,6 +15,9 @@ export const scrollTrigger = {
 }
 
 export default function TopPage() {   
+    const showProjectRef = useRef()
+    gsap.registerPlugin(ScrollToPlugin);
+
     useEffect(() => {
         let name = new SplitText("#name")
         let lastname = new SplitText("#lastname")
@@ -78,11 +82,28 @@ export default function TopPage() {
             pin: true,
             anticipatePin: true,
           });
+
+        // Show Projects Scrub Animation
+        gsap.to(showProjectRef.current, {
+            scrollTrigger: {
+                start: 0,
+                end: "+=500",
+                scrub: 1,
+            },
+            autoAlpha: 0,
+            letterSpacing: '0.3vw',
+        })
     })
             
     return <div className="top">
         <div className="name" id="name">Alexandre</div>
         <div className="name" id="lastname">Bizord</div>
         <div className="title" id="title">Digital Artist & Developer</div>
+        <div className="show-projects" ref={showProjectRef}>
+            <p onClick={() => {
+                gsap.to(window, {duration: 0.75, scrollTo:{y: "#content", offsetY: -300}, ease:'power2'});
+            }}>Scroll to see my projects</p>
+            <FaChevronDown style={{transform: 'scaleX(1.5)'}}/>
+        </div>
     </div>
 }

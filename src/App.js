@@ -1,32 +1,31 @@
 import './App.css';
-import { useState } from 'react';
 import TopPage from './components/TopPage';
-import smoothScroll from './hooks/useSmoothScroll';
 import Cursor from './components/Cursor';
-import Project from './components/Project';
 import ProjectManager from './components/ProjectManager';
+import gsap from 'gsap/all';
+import ScrollTrigger from 'gsap/ScrollTrigger';
+import Header from './components/Header';
 
 function App() {
-  let [loader, setLoader] = useState(true)
+
+    gsap.registerPlugin(ScrollTrigger);
 
   // useEffect(() => {
   //   smoothScroll("#content-scroll")
   // })
 
-  return (<div>
+  return <div>
     {/* <div className="App">
       <div className='scroll-container'> */}
       <div id="viewport">
         <div id="content-scroll">
-        {/* <Navbar /> */}
         <Cursor />
         <TopPage />
         <ProjectManager />
-        {/* <div style={{height: 2000}}></div> */}
+        <Header />
       </div>
-      {/* <Loader setLoaderState={setLoader} /> */}
-    </div></div>
-  );
+    </div>
+    </div>
 }
 
 export default App;

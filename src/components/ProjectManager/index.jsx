@@ -11,12 +11,7 @@ export default function ProjectManager() {
         />)
     }
 
-    return <div className="content">
+    return <div className="content" id="content">
         {buildProjects()}
-        {/* <Project first={true} />
-        <Project offset={2000} />
-        <Project offset={3700} />
-        <Project offset={3700+1700} />
-        <Project offset={3700+1700+1700} /> */}
     </div>
 }
