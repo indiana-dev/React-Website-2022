@@ -1,8 +1,8 @@
+import React from 'react';
 import { OrthographicCamera, shaderMaterial } from '@react-three/drei'
 import { extend, useFrame } from '@react-three/fiber'
 import { Canvas } from '@react-three/fiber'
-import { useState } from 'react'
-import { useRef } from 'react/cjs/react.development'
+import { useState, useRef } from 'react'
 import { Matrix4, Vector3 } from 'three'
 import { Vector2 } from 'three'
 import { Color } from 'three'
@@ -152,7 +152,7 @@ const ColorShiftMaterial = shaderMaterial(
 function Render() {
     const res = new Vector2(window.innerWidth, window.innerHeight)
     let [cam, setCam] = useState(new Camera()) 
-    const timeRef = useRef()
+    const timeRef = useRef(null)
 
     useFrame(({clock}) => {
         timeRef.current.time = clock.getElapsedTime()
@@ -168,12 +168,10 @@ function Render() {
         setCam({...cam})
     }
 
-    console.log('cam', cam.pos, cam.viewMatrix)
-
     return <OrthographicCamera makeDefault args={[ - 1, 1, 1, - 1, 0, 1]} onClick={changeUniform}>
         <mesh>
             <planeBufferGeometry args={[window.innerWidth, window.innerHeight]} />
-            <colorShiftMaterial attach="material" color="hotpink" view_matrix={cam.viewMatrix} camPos={cam.pos} uResolution={res} ref={timeRef} />
+            <colorShiftMaterial attach="material" color="hotpink" camPos={cam.pos} time={0} view_matrix={cam.viewMatrix} uResolution={res} ref={timeRef} />
         </mesh>
         </OrthographicCamera>
 }
