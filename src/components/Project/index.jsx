@@ -14,68 +14,63 @@ export default function Project({
     const descRef = useRef()
 
     useEffect(() => {
+        // return
         let nameChars = new SplitText(nameRef.current).chars
         
         // Project Name Scrub Animation
-        if (first)
-            gsap.fromTo(nameRef.current, {
-                y: 500,
-                autoAlpha: 0,
-            }, {
-                scrollTrigger: {
-                    trigger: '.content',
-                    start: 'top bottom',
-                    end: "top top",
-                    scrub: 1,
-                    onLeave: () => {
-                        gsap.fromTo(nameChars, {
-                            autoAlpha: 1,
-                        }, {
-                            scrollTrigger: {
-                                trigger: '.content',
-                                start: window.innerHeight/2 + offset + 2000 - 300,
-                                end: "+=100",
-                                scrub: 1,
-                            },
-                            stagger: 0.02,
-                            autoAlpha: 0,
-                            y: -100
-                        })
-                    }
-                },
-                y: 0,
-                autoAlpha: 1,
-            })
-        else
-            gsap.fromTo(nameChars, {
-                autoAlpha: 0,
-                y: 100,
-            }, {
+        // if (first) {
+        //     let t = new gsap.timeline()
+
+        //     t.fromTo(nameRef.current, {
+        //         y: 500,
+        //         autoAlpha: 0,
+        //     }, {
+        //         scrollTrigger: {
+        //             trigger: '.content',
+        //             start: 'top bottom',
+        //             end: "top top",
+        //             scrub: 1,
+        //         },
+        //         y: 0,
+        //         autoAlpha: 1,
+        //     }).to(nameChars, {
+        //         scrollTrigger: {
+        //             trigger: '.content',
+        //             start: window.innerHeight/2 + offset + 2000 - 300,
+        //             end: "+=100",
+        //             scrub: 1,
+        //         },
+        //         stagger: 0.02,
+        //         autoAlpha: 0,
+        //         y: -100
+        //     })
+        // }
+        // else 
+        if (true)
+        {
+            let t = new gsap.timeline({
                 scrollTrigger: {
                     trigger: '.content',
                     start: window.innerHeight/2 + offset - 300,
-                    end: "+=100",
+                    end: "+=1800",
                     scrub: 1,
-                    onLeave: () => {
-                        gsap.fromTo(nameChars, {
-                            autoAlpha: 1,
-                        }, {
-                            scrollTrigger: {
-                                trigger: '.content',
-                                start: window.innerHeight/2 + offset + 1700 - 300,
-                                end: "+=100",
-                                scrub: 1,
-                            },
-                            stagger: 0.02,
-                            autoAlpha: 0,
-                            y: -100
-                        })
-                    }
                 },
+            })
+
+            t.fromTo(nameChars, {
+                autoAlpha: 0,
+                y: 100,
+            }, {               
                 stagger: 0.02,
                 autoAlpha: 1,
                 y: 0
             })
+            .to(nameChars, {
+                stagger: 0.02,
+                autoAlpha: 0,
+                y: -100
+            }, '+=2')
+        }
 
         // Project Description Scrub Animation
         let tl = new gsap.timeline({scrollTrigger: {

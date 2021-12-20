@@ -14,6 +14,12 @@ const Projects = [
         description: 'Small Desc',
         imagesPath: 'luminous',
         imagesCount: 8,
+    },
+    {
+        name: '22222 Fantasy',
+        description: 'Small Desc',
+        imagesPath: 'luminous',
+        imagesCount: 8,
     }
 ]
 

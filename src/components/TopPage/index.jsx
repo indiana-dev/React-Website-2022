@@ -25,7 +25,7 @@ export default function TopPage() {
         let wordA = name.chars
         let wordB = lastname.chars.reverse()
 
-        /// Last Name Animation Start
+        // Last Name Animation Start
         gsap.fromTo(wordB, {
             opacity: 0,
             x: -500,
@@ -78,7 +78,7 @@ export default function TopPage() {
         ScrollTrigger.create({
             trigger: ".content",
             start: "top top", 
-            end: "+=10000",
+            end: "+=7000",
             pin: true,
             anticipatePin: true,
           });
@@ -104,6 +104,6 @@ export default function TopPage() {
                 gsap.to(window, {duration: 0.75, scrollTo:{y: "#content", offsetY: -300}, ease:'power2'});
             }}>Scroll to see my projects</p>
             <FaChevronDown style={{transform: 'scaleX(1.5)'}}/>
-        </div>
+        </div> 
     </div>
 }

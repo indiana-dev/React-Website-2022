@@ -1,6 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Antic+Slab&family=Playfair+Display:wght@700&family=Unica+One&display=swap');
 
 .top {
+    width: 100%;
     height: 100vh;
     overflow: hidden;
     display: flex;
@@ -30,18 +31,18 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 100vw;
+    width: 100%;
 
     p {
         font-size: 2vw;
         font-family: 'Antic Slab', sans-serif;
         margin: 0;
         margin-bottom: 1vh;
-    }
-    
-    transition: 0.15s;
 
-    &:hover {
-        transform: scale(1.25);
+        transition: 0.15s;
+
+        &:hover {
+            transform: scale(1.25);
+        }
     }
 }

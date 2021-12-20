@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { OrthographicCamera, shaderMaterial } from '@react-three/drei'
 import { extend, useFrame } from '@react-three/fiber'
 import { Canvas } from '@react-three/fiber'
@@ -7,6 +7,9 @@ import { Matrix4, Vector3 } from 'three'
 import { Vector2 } from 'three'
 import { Color } from 'three'
 import './styles.scss'
+import ScrollTrigger from 'gsap/ScrollTrigger';
+
+const base_speed = 0.02
 
 function radians( degrees ) {
     return degrees * Math.PI / 180.0;
@@ -37,6 +40,7 @@ function lookAt( eye, at, up )
 class Camera {
     constructor() {
         this.pos = new Vector3(-1, 1, 1)
+        this.vel = new Vector3(0, 0, base_speed)
         this.yaw = -90
         this.pitch = 0
         this.speed = 1.
@@ -156,17 +160,34 @@ function Render() {
 
     useFrame(({clock}) => {
         timeRef.current.time = clock.getElapsedTime()
-        timeRef.current.camPos.z = -clock.getElapsedTime()
+
+        cam.pos.sub(cam.vel)
+
+        if (Math.abs(cam.vel.z) > base_speed) {
+            cam.vel.z *= 0.98
+        }
     })
 
     function changeUniform() {
-        console.log('click', cam)
-        cam.pos.x = 0.5
-        cam.pos.y=2
-        cam.pos.z = 0.1
-        cam.updateViewMatrix()
-        setCam({...cam})
+        // console.log('click', cam)
+        // cam.pos.x = 0.5
+        // cam.pos.y=2
+        // cam.pos.z = 0.1
+        // cam.updateViewMatrix()
+        // setCam({...cam})
     }
+
+    useEffect(() => {
+        ScrollTrigger.create({
+            onUpdate: (self) => {
+                const max = 3
+                let vel = self.getVelocity()
+                vel = Math.sqrt(Math.abs(vel))*Math.sign(vel)*0.0005
+
+                cam.vel.z = Math.max(Math.min(cam.vel.z+vel, max), -max)
+            }
+        })
+    })
 
     return <OrthographicCamera makeDefault args={[ - 1, 1, 1, - 1, 0, 1]} onClick={changeUniform}>
         <mesh>

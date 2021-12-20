@@ -21,7 +21,7 @@ function App() {
      <Background />
       <div id="viewport">
         <div id="content-scroll">
-        {/* <Cursor /> */}
+        <Cursor />  
         <TopPage />
         <ProjectManager />
         <Header />

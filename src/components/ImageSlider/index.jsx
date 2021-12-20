@@ -17,7 +17,7 @@ export default function ImageSlider({
         let tl = gsap.timeline({
             scrollTrigger: {
             trigger: containerRef.current,
-            start: offset ? window.innerHeight/2 + offset - 300 : 'top top',
+            start: offset ? window.innerHeight/2 + offset  : 'top top',
             scrub: 0.5,
             end: "+=" + (2000-vh),
             // markers: true,  

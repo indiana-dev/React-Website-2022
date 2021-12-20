@@ -1,6 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Antic+Slab&family=Nanum+Gothic+Coding&family=Playfair+Display:wght@700&family=Unica+One&display=swap');
 
 .project-container {
+    width: 100%;
     height: 100vh;
     display: flex;
     align-items: center;
@@ -9,7 +10,7 @@
 
 .project-container.absolute-container {
     position: absolute;
-    width: 100vw;
+    width: 100%;
     height: 100vh;
     top: 0;
     left: 0;
