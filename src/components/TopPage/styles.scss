@@ -16,9 +16,10 @@
 }
 
 .title {
-    font-size: 3.5vw;
+    font-size: 3vw;
     position: absolute;
     right: 10vw;
+    white-space: nowrap;
     font-family: 'Antic Slab', sans-serif;
     color: #ffc1c1;
 }

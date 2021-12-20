@@ -5,6 +5,7 @@ import ProjectManager from './components/ProjectManager';
 import gsap from 'gsap/all';
 import ScrollTrigger from 'gsap/ScrollTrigger';
 import Header from './components/Header';
+import Background from './components/Background';
 
 function App() {
 
@@ -17,9 +18,10 @@ function App() {
   return <div>
     {/* <div className="App">
       <div className='scroll-container'> */}
+     <Background />
       <div id="viewport">
         <div id="content-scroll">
-        <Cursor />
+        {/* <Cursor /> */}
         <TopPage />
         <ProjectManager />
         <Header />
