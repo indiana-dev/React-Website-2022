@@ -3,6 +3,7 @@ import { useEffect, useRef } from 'react'
 import ImageSlider from '../ImageSlider'
 import './styles.scss'
 import { SplitText } from '../../libraries/Split3.min'
+import VideoSlider from '../VideoSlider'
 
 export default function Project({
     first=false,
@@ -95,8 +96,11 @@ export default function Project({
 
     return <div className={'project-container' + (first ? '' : ' absolute-container')} ref={containerRef} >
             <div className='project-pictures'>
+                { project.video ? <VideoSlider containerRef={containerRef} offset={offset} project={project} /> 
+                : <>
                 <ImageSlider direction="up" horizontal_align="left" containerRef={containerRef} offset={offset} project={project}/>
                 <ImageSlider direction="down" horizontal_align="right" containerRef={containerRef} offset={offset} project={project}/>
+                </>}
             </div>
             <div className='project-infos'>
                 <div className='project-name' ref={nameRef}>{project.name}</div>
