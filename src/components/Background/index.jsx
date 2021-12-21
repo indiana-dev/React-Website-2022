@@ -8,6 +8,7 @@ import { Vector2 } from 'three'
 import { Color } from 'three'
 import './styles.scss'
 import ScrollTrigger from 'gsap/ScrollTrigger';
+import FragmentShader from './fragment'
 
 const base_speed = 0.02
 
@@ -39,7 +40,7 @@ function lookAt( eye, at, up )
 
 class Camera {
     constructor() {
-        this.pos = new Vector3(-1, 1, 1)
+        this.pos = new Vector3(-3, 1, 1)
         this.vel = new Vector3(0, 0, base_speed)
         this.yaw = -90
         this.pitch = 0
@@ -72,82 +73,7 @@ const ColorShiftMaterial = shaderMaterial(
         gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
         vUv = uv;
       }
-    `,
-    // fragment shader
-    `
-      uniform float time;
-      uniform vec3 color;
-      uniform vec2 uResolution;
-      uniform vec3 camPos;
-      uniform mat4 view_matrix;
-      varying vec2 vUv;
-
-      // DISTANCE FUNCTIONS
-
-    float fRepeatedSphere(vec3 p, float r) {
-        vec3 c = vec3(10.);
-        vec3 q = mod(p+0.5*c,c)-0.5*c;
-        return length(q) - r;
-    }
-
-    // SCENE
-
-    float sceneSDF(vec3 p) {
-        return fRepeatedSphere(p, 1.);
-    }
-      // RAYMARCH FUNCTIONS
-
-      const float EPSILON = 0.01;
-    const float MAX_DIST = 1000.;
-    const int MAX_MARCHING_STEPS = 1000;
-
-    vec3 rayDirection(float fieldOfView, vec2 size, vec2 fragCoord) {
-        vec2 xy = fragCoord - size / 2.0;
-        float z = size.y / tan(radians(fieldOfView) / 2.0);
-        return normalize(vec3(xy, -z));
-    }
-
-    vec2 shortestDistanceToSurface(vec3 eye, vec3 marchingDirection, float start, float end) {
-        float depth = start;
-        for (int i = 0; i < MAX_MARCHING_STEPS; i++) {
-            vec3 point = eye + depth * marchingDirection;
-            float dist = min(point.y, sceneSDF(point));
-
-            if (point.y < EPSILON) {
-                return vec2(depth, 1.);
-            }
-            
-            if (dist < EPSILON) {
-                return vec2(depth, 0.);
-            }
-            
-            depth += dist;
-            if (depth >= end) {
-                return vec2(end, -2.);
-            }
-        }
-        return vec2(end, -1.);
-    }
-
-      void main() {
-        vec3 viewDir = rayDirection(60., uResolution, vUv*uResolution);
-        vec3 worldDir = (view_matrix * vec4(viewDir, 0.)).xyz;
-        vec2 result = shortestDistanceToSurface(camPos, worldDir, 0., MAX_DIST);
-        float dist = result.x;
-        float type = result.y;
-        vec3 p = camPos + dist * worldDir;
-
-        // Didn't hit anything
-        if (type < 0.) {
-            gl_FragColor = vec4(0.,0.,0.,1.);//vec4(.2, .2, .2, 1.);
-            return;
-        }
-        
-        float d = dist/((sin(time)+1.)*250.+200.) + 0.5/dist;
-        vec3 finalColor = mix(vec3(d, 0., 0.), vec3(0.), dist/800.);
-        gl_FragColor = vec4(finalColor, 1.);
-      }
-    `
+    `, FragmentShader
   )
     
 
