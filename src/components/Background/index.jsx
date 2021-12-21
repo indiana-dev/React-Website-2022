@@ -87,6 +87,10 @@ function Render() {
     useFrame(({clock}) => {
         timeRef.current.time = clock.getElapsedTime()
 
+        cam.pitch -= Math.abs(cam.vel.z) <= base_speed ? 0. : cam.vel.z//0.01*cam.vel.z
+        cam.updateViewMatrix()
+        timeRef.current.view_matrix = cam.viewMatrix
+
         cam.pos.sub(cam.vel)
 
         if (Math.abs(cam.vel.z) > base_speed) {

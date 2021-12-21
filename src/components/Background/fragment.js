@@ -1,4 +1,4 @@
-export default `
+const FragmentShader = `
 precision mediump float;
 uniform float time;
 uniform vec3 color;
@@ -62,8 +62,8 @@ float sceneSDF(vec3 p) {
 // RAYMARCH FUNCTIONS
 
 const float EPSILON = 0.01;
-const float MAX_DIST = 1000.;
-const int MAX_MARCHING_STEPS = 1000;
+const float MAX_DIST = 200.;
+const int MAX_MARCHING_STEPS = 200;
 
 vec3 rayDirection(float fieldOfView, vec2 size, vec2 fragCoord) {
   vec2 xy = fragCoord - size / 2.0;
@@ -71,9 +71,9 @@ vec3 rayDirection(float fieldOfView, vec2 size, vec2 fragCoord) {
   return normalize(vec3(xy, -z));
 }
 
-vec2 shortestDistanceToSurface(vec3 eye, vec3 marchingDirection, float start, float end) {
+vec2 shortestDistanceToSurface(vec3 eye, vec3 marchingDirection, float start, float end, inout float i) {
   float depth = start;
-  for (int i = 0; i < MAX_MARCHING_STEPS; i++) {
+  for (i = 0.; i < float(MAX_MARCHING_STEPS); i += 1.0) {
       vec3 point = eye + depth * marchingDirection;
       float dist = sceneSDF(point);
     //   dist = min(point.y, dist);
@@ -82,7 +82,7 @@ vec2 shortestDistanceToSurface(vec3 eye, vec3 marchingDirection, float start, fl
     //       return vec2(depth, 1.);
     //   }
       
-      if (dist*dist < EPSILON) {
+      if (dist < EPSILON) {
           return vec2(depth, 0.);
       }
       
@@ -97,7 +97,8 @@ vec2 shortestDistanceToSurface(vec3 eye, vec3 marchingDirection, float start, fl
 void main() {
   vec3 viewDir = rayDirection(60., uResolution, vUv*uResolution);
   vec3 worldDir = (view_matrix * vec4(viewDir, 0.)).xyz;
-  vec2 result = shortestDistanceToSurface(camPos, worldDir, 0., MAX_DIST);
+  float i;
+  vec2 result = shortestDistanceToSurface(camPos, worldDir, 0., MAX_DIST, i);
   float dist = result.x;
   float type = result.y;
   vec3 p = camPos + dist * worldDir;
@@ -107,8 +108,19 @@ void main() {
       gl_FragColor = vec4(0.,0.,0.,1.);//vec4(.2, .2, .2, 1.);
       return;
   }
-  
+
+  float fog = min(1., 
+    smoothstep(0., MAX_DIST, dist) + 
+    smoothstep(0., float(MAX_MARCHING_STEPS), i)
+    );
+
   float d = dist/((sin(time)+1.)*250.+200.) + 0.5/dist;
-  vec3 finalColor = mix(vec3(d, 0.01*dist*0.25, 0.01*dist*0.5), vec3(0.), max(0.6,dist/1000.));
+  vec3 col = vec3(d, 0.01*dist*0.25, 0.01*dist*0.5);
+
+  vec3 finalColor = mix(col, vec3(0.), fog);
+
+//   vec3 finalColor = mix(col, vec3(0.), max(0.6,dist/1000.));
   gl_FragColor = vec4(finalColor, 1.);
 }`
+
+export default FragmentShader
