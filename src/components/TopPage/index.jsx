@@ -1,9 +1,7 @@
 import gsap, { ScrollToPlugin } from "gsap/all";
-import ScrollTrigger from "gsap/ScrollTrigger";
 import { useEffect, useRef } from "react";
 import { SplitText } from '../../libraries/Split3.min'
 import { FaChevronDown } from 'react-icons/fa';
-
 import './styles.scss'
 
 export const scrollTrigger = {
@@ -74,14 +72,6 @@ export default function TopPage() {
             left: 0
         })
         
-        // Main Content Pinning
-        ScrollTrigger.create({
-            trigger: ".content",
-            start: "top top", 
-            end: "+=7000",
-            pin: true,
-            anticipatePin: true,
-          });
 
         // Show Projects Scrub Animation
         gsap.to(showProjectRef.current, {

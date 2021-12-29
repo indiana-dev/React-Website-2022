@@ -1,59 +1,29 @@
-import gsap from "gsap/all"
+import gsap, { SlowMo } from "gsap/all"
 import { useEffect, useRef } from "react"
 import './styles.scss'
 
+gsap.registerPlugin(SlowMo)
+
 export default function VideoSlider({
     project,
-    containerRef,
-    offset
 }) {
-    const vh = window.innerHeight
     const slider = useRef()
 
     useEffect(() => {
-        // const elmHeight = slider.current.clientHeight
-        // let tl = gsap.timeline({
-        //     scrollTrigger: {
-        //     trigger: containerRef.current,
-        //     start: offset ? window.innerHeight/2 + offset  : 'top top',
-        //     scrub: 0.5,
-        //     end: "+=" + (2000-vh),
-        //     // markers: true,  
-        // }})
-
-        // let tl = gsap.timeline({
-        //     scrollTrigger: {
-        //         trigger: containerRef.current,
-        //         start: offset ? window.innerHeight/2 + offset  : 'top top',
-        //         scrub: 1,
-        //         end: "+=" + (2000-vh),
-        //     }
-        // })
-
-        let tl = gsap.timeline({
-            scrollTrigger: {
-                trigger: containerRef.current,
-                start: offset ? window.innerHeight/2 + offset  : 'top top',
-                scrub: 1,
-                end: '+=1333',
-            }
+        let tl = new gsap.timeline({
+            scrollTrigger: project.scrollTrigger({scrub: true})
         })
 
-        tl.fromTo(slider.current.children, {
-            autoAlpha: 0,
-            y: -400,
-        }, {
-            stagger: 1,
-            duration: 1,
+        tl.to(slider.current.children, {
             autoAlpha: 1,
-            y: 0,
-            scale: 1.5,
-        }).to(slider.current.children, {
+            scale: 2,
             stagger: 1,
-            duration: 1,
+            ease: 'expo',
+        }).to(slider.current.children, {
             autoAlpha: 0,
-            y: 400,
-            scale: 1,
+            scale: 4,
+            stagger: 1,
+            ease: 'expo',
         }, '<+=1')
     })
 

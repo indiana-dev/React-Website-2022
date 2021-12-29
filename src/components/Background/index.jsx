@@ -81,7 +81,7 @@ const ColorShiftMaterial = shaderMaterial(
 
 function Render() {
     const res = new Vector2(window.innerWidth, window.innerHeight)
-    let [cam, setCam] = useState(new Camera()) 
+    let [cam, ] = useState(new Camera()) 
     const timeRef = useRef(null)
 
     useFrame(({clock}) => {

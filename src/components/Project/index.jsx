@@ -1,13 +1,12 @@
 import gsap from 'gsap/all'
 import { useEffect, useRef } from 'react'
-import ImageSlider from '../ImageSlider'
-import './styles.scss'
 import { SplitText } from '../../libraries/Split3.min'
 import VideoSlider from '../VideoSlider'
+import ImageSlider from '../ImageSlider'
+import './styles.scss'
 
 export default function Project({
     first=false,
-    offset=0,
     project,
 }) {
     const containerRef = useRef()
@@ -15,74 +14,51 @@ export default function Project({
     const descRef = useRef()
 
     useEffect(() => {
-        // return
         let nameChars = new SplitText(nameRef.current).chars
-        
-        // Project Name Scrub Animation
-        // if (first) {
-        //     let t = new gsap.timeline()
 
-        //     t.fromTo(nameRef.current, {
-        //         y: 500,
-        //         autoAlpha: 0,
-        //     }, {
-        //         scrollTrigger: {
-        //             trigger: '.content',
-        //             start: 'top bottom',
-        //             end: "top top",
-        //             scrub: 1,
-        //         },
-        //         y: 0,
-        //         autoAlpha: 1,
-        //     }).to(nameChars, {
-        //         scrollTrigger: {
-        //             trigger: '.content',
-        //             start: window.innerHeight/2 + offset + 2000 - 300,
-        //             end: "+=100",
-        //             scrub: 1,
-        //         },
-        //         stagger: 0.02,
-        //         autoAlpha: 0,
-        //         y: -100
-        //     })
-        // }
-        // else 
-        if (true)
-        {
-            let t = new gsap.timeline({
-                scrollTrigger: {
-                    trigger: '.content',
-                    start: window.innerHeight/2 + offset - 300,
-                    end: "+=1800",
-                    scrub: 1,
+        let t = new gsap.timeline({
+            scrollTrigger: project.scrollTrigger({
+                toggleActions: 'restart none none none',
+                onLeave: () => {
+                    if (t.reversed()) t.play('Appear')
+                    else t.resume('Appear')
+                },
+                onEnterBack: () => {
+                    t.reverse('Disappear')
+                },
+                onLeaveBack: () => {
+                    if (t.reversed()) t.resume()
+                    else t.reverse()
                 },
             })
-
-            t.fromTo(nameChars, {
-                autoAlpha: 0,
-                y: 100,
-            }, {               
-                stagger: 0.02,
-                autoAlpha: 1,
-                y: 0
-            })
-            .to(nameChars, {
-                stagger: 0.02,
-                autoAlpha: 0,
-                y: -100
-            }, '+=2')
+        })
+        .fromTo(nameChars, {
+            y: '100%',
+        }, {
+            y: 0,
+            autoAlpha: 1,
+            stagger: 0.02,
+            duration: 0.3,
+            ease: 'expo'
         }
+        )
+        .addPause()
+        .addLabel('Appear')
+        .to(nameChars, {
+            autoAlpha: 0,
+            y: '-100%',
+            stagger: 0.02,
+            duration: 0.3,
+            ease: 'expo'
+        })
+        .addLabel('Disappear')
 
         // Project Description Scrub Animation
-        let tl = new gsap.timeline({scrollTrigger: {
-            trigger: '.content',
-            start: offset ? window.innerHeight/2 + offset - 300 : 'top center',
-            end: "+=2000",
-            scrub: 1,
-        }})
+        let tl = new gsap.timeline({
+            scrollTrigger: project.scrollTrigger({scrub: 2})
+        })
         tl.fromTo(descRef.current, {
             y: 300,
-            autoAlpha: 0,
         }, {
             y: 0,
             autoAlpha: 1,
@@ -96,10 +72,10 @@ export default function Project({
 
     return <div className={'project-container' + (first ? '' : ' absolute-container')} ref={containerRef} >
             <div className='project-pictures'>
-                { project.video ? <VideoSlider containerRef={containerRef} offset={offset} project={project} /> 
+                { project.video ? <VideoSlider project={project} /> 
                 : <>
-                <ImageSlider direction="up" horizontal_align="left" containerRef={containerRef} offset={offset} project={project}/>
-                <ImageSlider direction="down" horizontal_align="right" containerRef={containerRef} offset={offset} project={project}/>
+                <ImageSlider direction="up" horizontal_align="left" project={project}/>
+                <ImageSlider direction="down" horizontal_align="right" project={project}/>
                 </>}
             </div>
             <div className='project-infos'>

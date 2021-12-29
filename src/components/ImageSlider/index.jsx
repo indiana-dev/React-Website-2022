@@ -5,8 +5,6 @@ import gsap from 'gsap/all'
 export default function ImageSlider({
     direction,
     horizontal_align,
-    containerRef,
-    offset,
     project,
 }) {
     const vh = window.innerHeight
@@ -14,14 +12,10 @@ export default function ImageSlider({
 
     useEffect(() => {
         const elmHeight = slider.current.clientHeight
-        let tl = gsap.timeline({
-            scrollTrigger: {
-            trigger: containerRef.current,
-            start: offset ? window.innerHeight/2 + offset  : 'top top',
-            scrub: 0.5,
-            end: "+=" + (2000-vh),
-            // markers: true,  
-        }})
+
+        let tl = new gsap.timeline({
+            scrollTrigger: project.scrollTrigger({scrub: true})
+        })
         
         tl.fromTo(slider.current, {autoAlpha: 0}, {
             autoAlpha: 1

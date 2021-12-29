@@ -29,9 +29,14 @@
     margin-top: 15vh;
     font-family: 'Nanum Gothic Coding';
     height: 20vh;
+
+    > div > div > div { // Needed to animate Project Name with GSAP and TextSplit
+        opacity: 0;
+    }
 }
 
 .project-desc {
+    opacity: 0;
     margin-top: 5vh;
     font-size: 1.5vw;
     text-align: justify;
