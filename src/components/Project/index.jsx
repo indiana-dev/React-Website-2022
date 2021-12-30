@@ -30,6 +30,11 @@ export default function Project({
                     if (t.reversed()) t.resume()
                     else t.reverse()
                 },
+                onUpdate: (u) => {
+                    let currentDisplay = containerRef.current.style.display
+                    if (currentDisplay === 'none' && u.isActive) containerRef.current.style.display = 'flex'
+                    else if (currentDisplay !== 'none' && !u.isActive) containerRef.current.style.display = 'none'
+                },
             })
         })
         .fromTo(nameChars, {
@@ -68,7 +73,9 @@ export default function Project({
             autoAlpha: 0,
             scale: 0.5,
         })
-    })
+
+        if (!first) containerRef.current.style.display = 'none'
+    }, [project, first])
 
     return <div className={'project-container' + (first ? '' : ' absolute-container')} ref={containerRef} >
             <div className='project-pictures'>
@@ -80,7 +87,10 @@ export default function Project({
             </div>
             <div className='project-infos'>
                 <div className='project-name' ref={nameRef}>{project.name}</div>
-                <div className='project-desc' ref={descRef}>{project.description}</div>
+                <div className='project-desc' ref={descRef}>
+                    {project.description}<br />
+                    <div className='project-button'>Not yet available</div>
+                </div>
             </div>
-        </div>
+        </div> 
 }
