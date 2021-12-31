@@ -6,20 +6,23 @@
     overflow: hidden;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    padding-top: 15vh;
+    box-sizing: border-box;
+    // justify-content: center;
 }
 
 .name {
-    font-size: 15vw;
+    font-size: 10rem;
     text-align: left;
     font-family: 'Unica One', cursive;
-    margin: 0 10vw;
+    margin: 0 15vh;
 }
 
 .title {
     font-size: 3vw;
     position: absolute;
     right: 10vw;
+    bottom: 12rem;
     white-space: nowrap;
     font-family: 'Antic Slab', sans-serif;
     color: #ffc1c1;

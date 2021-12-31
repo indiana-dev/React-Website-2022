@@ -18,7 +18,7 @@ function App() {
   return <div>
     {/* <div className="App">
       <div className='scroll-container'> */}
-      {/* <Background /> */}
+      <Background />
       <div id="viewport">
         <div id="content-scroll">
         <Cursor />  
