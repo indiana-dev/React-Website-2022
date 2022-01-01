@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { OrthographicCamera, shaderMaterial } from '@react-three/drei'
 import { extend, useFrame } from '@react-three/fiber'
 import { Canvas } from '@react-three/fiber'
@@ -6,9 +6,10 @@ import { useState, useRef } from 'react'
 import { Matrix4, Vector3 } from 'three'
 import { Vector2 } from 'three'
 import { Color } from 'three'
-import './styles.scss'
 import ScrollTrigger from 'gsap/ScrollTrigger';
 import FragmentShader from './fragment'
+import gsap from 'gsap/all';
+import './styles.scss'
 
 const base_speed = 0.02
 
@@ -64,7 +65,7 @@ class Camera {
 }
 
 const ColorShiftMaterial = shaderMaterial(
-    { time: 0, color: new Color(0.2, 0.0, 0.1), view_matrix: undefined, camPos: [1.4, 1.5, 1.6], uResolution: undefined,
+    { time: 0, color: new Color(0.2, 0.0, 0.1), view_matrix: undefined, camPos: [1.4, 1.5, 1.6], uResolution: undefined, progress: 0,
     },
     // vertex shader
     `
@@ -98,12 +99,23 @@ function Render() {
         }
     })
 
+    function mouseMove(e) {
+        let { screenX: x, screenY: y } = e
+        if (window.scrollY > window.innerHeight/2) return
+        const animDuration = 0.5
+        if (x > window.innerWidth/2 && timeRef.current.progress === 0) {
+            gsap.to(timeRef.current, {progress: 1, duration: animDuration, ease: 'power2.inOut'})
+        } else if (x < window.innerWidth/2 && timeRef.current.progress === 1) {
+            gsap.to(timeRef.current, {progress: 0, duration: animDuration, ease: 'power2.inOut'})
+        }
+    }
+
     function changeUniform() {
         // console.log('click', cam)
         // cam.pos.x = 0.5
         // cam.pos.y=2
         // cam.pos.z = 0.1
-        // cam.updateViewMatrix()
+        // cam.updateViewMatri0+
         // setCam({...cam})
     }
 
@@ -117,17 +129,27 @@ function Render() {
                 cam.vel.z = Math.max(Math.min(cam.vel.z+vel, max), -max)
             }
         })
-    })
+
+        window.addEventListener('mousemove', mouseMove)
+    }, [])
 
     return <OrthographicCamera makeDefault args={[ - 1, 1, 1, - 1, 0, 1]} onClick={changeUniform}>
         <mesh>
             <planeBufferGeometry args={[window.innerWidth, window.innerHeight]} />
-            <colorShiftMaterial attach="material" color="hotpink" camPos={cam.pos} time={0} view_matrix={cam.viewMatrix} uResolution={res} ref={timeRef} />
+            <colorShiftMaterial attach="material" color="hotpink" 
+                camPos={cam.pos} 
+                time={0} 
+                view_matrix={cam.viewMatrix}
+                uResolution={res} 
+                progress={0}
+                ref={timeRef} 
+            />
         </mesh>
         </OrthographicCamera>
 }
 
 export default function Background() {
+    console.log('Background Render')
     return <div className="bg">
         <Canvas>
             <Render />

@@ -75,6 +75,10 @@ export default function Project({
         })
 
         if (!first) containerRef.current.style.display = 'none'
+
+        return () => {
+            t.kill()
+        }
     }, [project, first])
 
     return <div className={'project-container' + (first ? '' : ' absolute-container')} ref={containerRef} >

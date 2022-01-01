@@ -12,17 +12,19 @@
 }
 
 .name {
-    font-size: 10rem;
+    font-size: 12rem;
     text-align: left;
     font-family: 'Unica One', cursive;
     margin: 0 15vh;
 }
 
 .title {
-    font-size: 3vw;
-    position: absolute;
-    right: 10vw;
-    bottom: 12rem;
+    font-size: 3rem;
+    // position: absolute;
+    // right: 10vw;
+    // bottom: 12rem;
+    padding-right: 15rem;
+    text-align: end;
     white-space: nowrap;
     font-family: 'Antic Slab', sans-serif;
     color: #ffc1c1;

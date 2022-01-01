@@ -2,8 +2,8 @@ import gsap, { ScrollToPlugin } from "gsap/all";
 import { useEffect, useRef, useState } from "react";
 import { SplitText } from '../../libraries/Split3.min'
 import { FaChevronDown } from 'react-icons/fa';
-import './styles.scss'
 import ContentSelector from "../ContentSelector";
+import './styles.scss'
 
 export const scrollTrigger = {
     trigger: '#name',
@@ -90,6 +90,7 @@ export default function TopPage() {
     }, [])
 
     function onMouseMove({ screenX: x, screenY: _ }) {
+        if (window.scrollY > window.innerHeight/2) return
         const obj = {progress: 1}
         const animDuration = 0.1
         if (x > window.innerWidth/2 && contentIndex === 0) {
@@ -105,8 +106,8 @@ export default function TopPage() {
     return <div className="top" onMouseMove={onMouseMove}>
         <div className="name" id="name">Alexandre</div>
         <div className="name" id="lastname">Bizord</div>
-        <ContentSelector index={contentIndex} progress={contentProgress} />
         <div className="title" id="title">Digital Artist & Developer</div>
+        <ContentSelector index={contentIndex} progress={contentProgress} />
         {/* <div className="show-projects" ref={showProjectRef}>
             <p onClick={() => {
                 gsap.to(window, {duration: 0.75, scrollTo:{y: "#content", offsetY: -300}, ease:'power2'});

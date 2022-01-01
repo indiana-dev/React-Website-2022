@@ -4,3 +4,7 @@
   cursor: none;
   overflow-x: none;
 }
+
+#content-scroll {
+  mix-blend-mode: difference;
+}

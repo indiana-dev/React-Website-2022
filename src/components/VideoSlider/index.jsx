@@ -16,12 +16,12 @@ export default function VideoSlider({
 
         tl.to(slider.current.children, {
             autoAlpha: 1,
-            scale: 2,
+            scale: 1.5,
             stagger: 1,
             ease: 'expo',
         }).to(slider.current.children, {
             autoAlpha: 0,
-            scale: 4,
+            scale: 2,
             stagger: 1,
             ease: 'expo',
         }, '<+=1')
