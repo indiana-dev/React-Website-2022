@@ -5,7 +5,7 @@ import gsap from 'gsap/all'
 export default function ImageSlider({
     direction,
     horizontal_align,
-    project,
+    artwork,
 }) {
     const vh = window.innerHeight
     const slider = useRef()
@@ -14,7 +14,7 @@ export default function ImageSlider({
         const elmHeight = slider.current.clientHeight
 
         let tl = new gsap.timeline({
-            scrollTrigger: project.scrollTrigger({scrub: true})
+            scrollTrigger: artwork.scrollTrigger({scrub: true})
         })
         
         tl.fromTo(slider.current, {autoAlpha: 0}, {
@@ -33,12 +33,12 @@ export default function ImageSlider({
     function createImages() {
         let images = []
 
-        for (let i = 0; i < project.imagesCount/2; i++) {
-            let imageIndex = horizontal_align === 'left' ? i : project.imagesCount-i-1
-            let extension = project.video ? '' : '.png'
-            let imagePath = 'assets/images/' + project.imagesPath + '/' + imageIndex + extension
+        for (let i = 0; i < artwork.imagesCount/2; i++) {
+            let imageIndex = horizontal_align === 'left' ? i : artwork.imagesCount-i-1
+            let extension = artwork.video ? '' : '.png'
+            let imagePath = 'assets/images/' + artwork.imagesPath + '/' + imageIndex + extension
 
-            if (project.video) images.push(<video autoPlay muted loop playsInline key={imagePath}>
+            if (artwork.video) images.push(<video autoPlay muted loop playsInline key={imagePath}>
                     <source src={imagePath+'.webm'} type="video/webm"></source>
                     <source src={imagePath+'.mp4'} type="video/mp4"></source>
                 </video>)

@@ -1,12 +1,14 @@
 import ScrollTrigger from "gsap/ScrollTrigger";
-import { useEffect, useRef } from "react";
-import Projects from "../../projects";
-import Project from "../Project";
-import ProjectData from '../../classes/ProjectData'
+import { useEffect, useRef, useState } from "react";
+import Artworks from "../../artworks";
+import Artwork from "../Artwork";
+import ArtworkData from '../../classes/ArtworkData'
 import './styles.scss'
-import { useState } from "react/cjs/react.development";
+import Project from "../Project";
+import ProjectData from "../../classes/ProjectData";
+import Projects from "../../projects";
 
-export default function ProjectManager() {  
+export default function ArtworkManager() {  
     const [current, setCurrent] = useState(0)
     const mainContentPinning = useRef(null)
 
@@ -21,7 +23,7 @@ export default function ProjectManager() {
 
     useEffect(() => {
         const getTotalHeight = () => {
-            return Projects.reduce((a, b) => (a.vh ?? a) + b.vh) * window.innerHeight
+            return Artworks.reduce((a, b) => (a.vh ?? a) + b.vh) * window.innerHeight
         }  
 
         if (mainContentPinning.current) mainContentPinning.current.kill()
@@ -38,13 +40,32 @@ export default function ProjectManager() {
     }, [current])
         
     
+    function buildArtworks() {
+        const vh = window.innerHeight
+        let cumulated = 0
+        let artworks = []
+
+        for (let [i, p] of Object.entries(Artworks)) {
+            // console.log(i, p)
+            artworks.push(
+                <Artwork 
+                    // eslint-disable-next-line eqeqeq
+                    first={i==0} 
+                    artwork={new ArtworkData(p, cumulated)} 
+                    key={i}
+                />)
+            cumulated += p.vh * vh
+        }
+
+        return artworks
+    }
+
     function buildProjects() {
         const vh = window.innerHeight
         let cumulated = 0
         let projects = []
 
         for (let [i, p] of Object.entries(Projects)) {
-            // console.log(i, p)
             projects.push(
                 <Project 
                     // eslint-disable-next-line eqeqeq
@@ -58,12 +79,8 @@ export default function ProjectManager() {
         return projects
     }
 
-    function buildOther() {
-        return <div style={{height: '800vh'}}></div>
-    }
-
     console.log('current', current)
     return <div className="content" id="content">
-         {current === 0 ? buildProjects() : buildOther()}
+         {current === 0 ? buildArtworks() : buildProjects()}
     </div>
 }

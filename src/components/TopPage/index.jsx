@@ -17,7 +17,7 @@ export default function TopPage() {
     const [contentIndex, setContentIndex] = useState(0)
     const [contentProgress, setContentProgress] = useState(1)
 
-    const showProjectRef = useRef()
+    const showArtworkRef = useRef()
     gsap.registerPlugin(ScrollToPlugin);
 
     useEffect(() => {
@@ -75,18 +75,17 @@ export default function TopPage() {
             },
             left: 0
         })
-        
 
-        // Show Projects Scrub Animation
-        gsap.to(showProjectRef.current, {
-            scrollTrigger: {
-                start: 0,
-                end: "+=500",
-                scrub: 1,
-            },
-            autoAlpha: 0,
-            letterSpacing: '0.3vw',
-        })
+        // Show Artworks Scrub Animation
+        // gsap.to(showArtworkRef.current, {
+        //     scrollTrigger: {
+        //         start: 0,
+        //         end: "+=500",
+        //         scrub: 1,
+        //     },
+        //     autoAlpha: 0,
+        //     letterSpacing: '0.3vw',
+        // })
     }, [])
 
     function onMouseMove({ screenX: x, screenY: _ }) {
@@ -108,10 +107,10 @@ export default function TopPage() {
         <div className="name" id="lastname">Bizord</div>
         <div className="title" id="title">Digital Artist & Developer</div>
         <ContentSelector index={contentIndex} progress={contentProgress} />
-        {/* <div className="show-projects" ref={showProjectRef}>
+        {/* <div className="show-artworks" ref={showArtworkRef}>
             <p onClick={() => {
                 gsap.to(window, {duration: 0.75, scrollTo:{y: "#content", offsetY: -300}, ease:'power2'});
-            }}>Scroll to see my projects</p>
+            }}>Scroll to see my artworks</p>
             <FaChevronDown style={{transform: 'scaleX(1.5)'}}/>
         </div>  */}
     </div>

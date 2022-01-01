@@ -8,6 +8,7 @@
     flex-direction: column;
     padding-top: 15vh;
     box-sizing: border-box;
+    mix-blend-mode: difference;
     // justify-content: center;
 }
 
@@ -30,7 +31,7 @@
     color: #ffc1c1;
 }
 
-.show-projects {
+.show-artworks {
     position: absolute;
     bottom: 5vh;
     display: flex;

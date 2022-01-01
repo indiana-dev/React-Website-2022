@@ -1,10 +1,10 @@
+* {
+  box-sizing: border-box;
+}
+
 #viewport {
   background-color: #151320;
   color: #ffcccc;
   cursor: none;
   overflow-x: none;
-}
-
-#content-scroll {
-  mix-blend-mode: difference;
 }

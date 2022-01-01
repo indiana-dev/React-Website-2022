@@ -1,6 +1,6 @@
 import TopPage from './components/TopPage';
 import Cursor from './components/Cursor';
-import ProjectManager from './components/ProjectManager';
+import ArtworkManager from './components/ArtworkManager';
 import gsap from 'gsap/all';
 import ScrollTrigger from 'gsap/ScrollTrigger';
 import Header from './components/Header';
@@ -22,7 +22,7 @@ function App() {
         <div id="content-scroll" >
         <Cursor />
         <TopPage />
-        <ProjectManager />
+        <ArtworkManager />
         <Header />
       </div>
     </div>

@@ -5,13 +5,13 @@ import './styles.scss'
 gsap.registerPlugin(SlowMo)
 
 export default function VideoSlider({
-    project,
+    artwork,
 }) {
     const slider = useRef()
 
     useEffect(() => {
         let tl = new gsap.timeline({
-            scrollTrigger: project.scrollTrigger({scrub: true})
+            scrollTrigger: artwork.scrollTrigger({scrub: true})
         })
 
         tl.to(slider.current.children, {
@@ -30,10 +30,10 @@ export default function VideoSlider({
     function createVideos() {
         let videos = []
 
-        for (let i = 0; i < project.imagesCount; i++) {
-            // let imageIndex = horizontal_align === 'left' ? i : project.imagesCount-i-1
-            let extension = project.video ? '' : '.png'
-            let imagePath = 'assets/images/' + project.imagesPath + '/' + i + extension
+        for (let i = 0; i < artwork.imagesCount; i++) {
+            // let imageIndex = horizontal_align === 'left' ? i : artwork.imagesCount-i-1
+            let extension = artwork.video ? '' : '.png'
+            let imagePath = 'assets/images/' + artwork.imagesPath + '/' + i + extension
 
             videos.push(<video autoPlay muted loop playsInline key={imagePath}>
                     <source src={imagePath+'.webm'} type="video/webm"></source>

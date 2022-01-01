@@ -1,7 +1,6 @@
-class ProjectData {
+class ArtworkData {
     constructor(p, offset) {
         this.name = p.name
-        this.skills = p.skills
         this.description = p.description
         this.imagesPath = p.imagesPath
         this.imagesCount = p.imagesCount
@@ -16,9 +15,9 @@ class ProjectData {
             trigger: '.content',
             start: 'top top-=' + this.offset,
             end: "+=" + (100*this.vh) + "%",
-            // fastScrollEnd: true,
+            fastScrollEnd: true,
         }
     }
 }
 
-export default ProjectData
+export default ArtworkData

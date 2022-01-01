@@ -1,71 +1,73 @@
-@import url('https://fonts.googleapis.com/css2?family=Antic+Slab&family=Nanum+Gothic+Coding&family=Playfair+Display:wght@700&family=Unica+One&display=swap');
-
 .project-container {
     width: 100%;
     height: 100vh;
     display: flex;
     align-items: center;
-    justify-content: center;
+    color: black;
+    // opacity: 0;
+    // justify-content: center;
+    // inset: 10rem;
 }
 
 .project-container.absolute-container {
+    // width: 100%;
+    // height: 100vh;
     position: absolute;
-    width: 100%;
-    height: 100vh;
     top: 0;
     left: 0;
 }
 
 .project-infos {
+    width: 50%;
     height: 100%;
-    margin-right: 7vw;
-    flex: 2;
+    padding: 0 7rem;
     display: flex;
     flex-direction: column;
-}
+    justify-content: center;
+    perspective: 100rem;
 
-.project-name {
-    font-size: 5vw;
-    margin-top: 15vh;
-    font-family: 'Nanum Gothic Coding';
-    height: 20vh;
-
-    > div > div > div { // Needed to animate Project Name with GSAP and TextSplit
-        opacity: 0;
+    > * {
+        transform-origin: left;
     }
 }
 
+.project-name {
+    font-size: 3rem;
+    font-family: 'Nanum Gothic Coding';
+
+    // > div > div > div { // Needed to animate Artwork Name with GSAP and TextSplit
+    //     opacity: 0;
+    // }
+}
+
 .project-desc {
-    opacity: 0;
-    margin-top: 5vh;
-    font-size: 1.5vw;
+    // opacity: 0;
+    margin: 5vh 0;
+    font-size: 1.5rem;
     text-align: justify;
 }
 
 .project-button {
-    --buton-color: pink;
+    --buton-color: black;
 
     width: 100%;
     padding: 10px 0;
+    height: 3rem;
     background-color: transparent;
     border: 3px solid var(--buton-color);
-    margin-top: 5vh;
+    // margin-top: 5vh;
+    margin: 0.5rem 0;
     text-align: center;
     font-family: 'Nanum Gothic Coding';
+    font-size: 1.5rem;
     text-transform: capitalize;
-    -webkit-transition: ease-out 0.4s;
-    -moz-transition: ease-out 0.4s;
-    transition: ease-out 0.4s;
+    -webkit-transition: ease-out 0.2s;
+    -moz-transition: ease-out 0.2s;
+    transition: ease-out 0.2s;
 
     &:hover {
         box-shadow: inset 0 100px 0 0 var(--buton-color);
-        color: rgb(34, 31, 31);
+        color: rgb(219, 197, 197);
         letter-spacing: 3px;
     }
-}
-
-.project-pictures {
-    position: relative;
-    min-height: 100%;
-    flex: 3;
 }

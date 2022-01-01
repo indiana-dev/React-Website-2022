@@ -1,20 +1,19 @@
 import gsap from 'gsap/all'
 import { useEffect, useRef } from 'react'
-import { SplitText } from '../../libraries/Split3.min'
-import VideoSlider from '../VideoSlider'
-import ImageSlider from '../ImageSlider'
 import './styles.scss'
 
 export default function Project({
     first=false,
-    project,
+    project
 }) {
     const containerRef = useRef()
+    const infoRef = useRef()
     const nameRef = useRef()
     const descRef = useRef()
 
     useEffect(() => {
-        let nameChars = new SplitText(nameRef.current).chars
+        const duration = 0.3
+        const stagger = 0.1
 
         let t = new gsap.timeline({
             scrollTrigger: project.scrollTrigger({
@@ -24,55 +23,42 @@ export default function Project({
                     else t.resume('Appear')
                 },
                 onEnterBack: () => {
+                    containerRef.current.style.display = 'flex'
                     t.reverse('Disappear')
                 },
                 onLeaveBack: () => {
                     if (t.reversed()) t.resume()
                     else t.reverse()
                 },
-                onUpdate: (u) => {
-                    let currentDisplay = containerRef.current.style.display
-                    if (currentDisplay === 'none' && u.isActive) containerRef.current.style.display = 'flex'
-                    else if (currentDisplay !== 'none' && !u.isActive) containerRef.current.style.display = 'none'
-                },
-            })
+            }),
+            onStart: () => {
+                containerRef.current.style.display = 'flex'
+            },
+            onComplete: () => {
+                containerRef.current.style.display = 'none'
+            },
+            onReverseComplete: () => {
+                containerRef.current.style.display = 'none'
+            }
+        }).from(infoRef.current.children, {
+            autoAlpha: 0,
+            rotateY: -90,
+            duration: duration,
+            stagger: stagger,
+            ease: 'linear',
+            clearProps: 'transform',
         })
-        .fromTo(nameChars, {
-            y: '100%',
-        }, {
-            y: 0,
-            autoAlpha: 1,
-            stagger: 0.02,
-            duration: 0.3,
-            ease: 'expo'
-        }
-        )
         .addPause()
         .addLabel('Appear')
-        .to(nameChars, {
+        .to(infoRef.current.children, {
             autoAlpha: 0,
-            y: '-100%',
-            stagger: 0.02,
-            duration: 0.3,
-            ease: 'expo'
+            rotateY: 90,
+            duration: duration,
+            stagger: stagger,
+            ease: 'linear',
+            clearProps: 'transform'
         })
         .addLabel('Disappear')
-
-        // Project Description Scrub Animation
-        let tl = new gsap.timeline({
-            scrollTrigger: project.scrollTrigger({scrub: 2})
-        })
-        tl.fromTo(descRef.current, {
-            y: 300,
-        }, {
-            y: 0,
-            autoAlpha: 1,
-            ease: "power1",
-            duration: 2,
-        }).to(descRef.current, {
-            autoAlpha: 0,
-            scale: 0.5,
-        })
 
         if (!first) containerRef.current.style.display = 'none'
 
@@ -81,20 +67,15 @@ export default function Project({
         }
     }, [project, first])
 
-    return <div className={'project-container' + (first ? '' : ' absolute-container')} ref={containerRef} >
-            <div className='project-pictures'>
-                { project.video ? <VideoSlider project={project} /> 
-                : <>
-                <ImageSlider direction="up" horizontal_align="left" project={project}/>
-                <ImageSlider direction="down" horizontal_align="right" project={project}/>
-                </>}
-            </div>
-            <div className='project-infos'>
+    console.log('first',first,project.name)
+    return <div className={'project-container' + (!first||true ? ' absolute-container' : '')} ref={containerRef}>
+        <div className='project-infos' ref={infoRef}>
                 <div className='project-name' ref={nameRef}>{project.name}</div>
                 <div className='project-desc' ref={descRef}>
                     {project.description}<br />
-                    <div className='project-button'>Not yet available</div>
                 </div>
-            </div>
-        </div> 
+                <div className='project-button learn-more-btn'>Learn More</div>
+                <div className='project-button open-github-btn'>Open on Github</div>
+        </div>
+    </div>
 }
