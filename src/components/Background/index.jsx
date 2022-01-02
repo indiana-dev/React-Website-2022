@@ -85,6 +85,7 @@ const ColorShiftMaterial = shaderMaterial(
 
 function Render() {
     const res = new Vector2(window.innerWidth, window.innerHeight)
+    const [resolution, setResolution] = useState([window.innerWidth, window.innerHeight])
     let [cam] = useState(new Camera()) 
     const timeRef = useRef(null)
 
@@ -102,16 +103,6 @@ function Render() {
         }
     })
 
-    function mouseMove({ screenX: x }) {
-        if (window.scrollY > window.innerHeight/2) return
-        const animDuration = 0.5
-        if (x > window.innerWidth/2 && timeRef.current.progress === 0) {
-            gsap.to(timeRef.current, {progress: 1, duration: animDuration, ease: 'power2.inOut'})
-        } else if (x < window.innerWidth/2 && timeRef.current.progress === 1) {
-            gsap.to(timeRef.current, {progress: 0, duration: animDuration, ease: 'power2.inOut'})
-        }
-    }
-
     useEffect(() => {
         ScrollTrigger.create({
             onUpdate: (self) => {
@@ -123,13 +114,35 @@ function Render() {
             }
         })
 
-        window.addEventListener('mousemove', mouseMove)
-    })
+        function mouseMove({ screenX: x }) {
+            if (window.scrollY > window.innerHeight/2) return
+            const animDuration = 0.5
+            if (x > window.innerWidth/2 && timeRef.current.progress === 0) {
+                gsap.to(timeRef.current, {progress: 1, duration: animDuration, ease: 'power2.inOut'})
+            } else if (x < window.innerWidth/2 && timeRef.current.progress === 1) {
+                gsap.to(timeRef.current, {progress: 0, duration: animDuration, ease: 'power2.inOut'})
+            }
+        }
+    
+        function windowsResize() {
+            console.log('new res ' + [window.innerWidth, window.innerHeight])
+            setResolution([window.innerWidth, window.innerHeight])
+        }
 
+        window.addEventListener('mousemove', mouseMove)
+        window.addEventListener('resize', windowsResize)
+
+        return () => {
+            window.removeEventListener(mouseMove)
+            window.removeEventListener(windowsResize)
+        }
+    }, [])
+
+    console.log('Background Render')
     return <OrthographicCamera makeDefault args={[-1, 1, 1, -1, 0, 1]}>
         <mesh>
-            <planeBufferGeometry args={[window.innerWidth, window.innerHeight]} />
-            <colorShiftMaterial attach="material" color="hotpink" 
+            <planeBufferGeometry args={resolution} />
+            <colorShiftMaterial attach="material"
                 camPos={cam.pos} 
                 time={0} 
                 view_matrix={cam.viewMatrix}
@@ -142,7 +155,6 @@ function Render() {
 }
 
 export default function Background() {
-    console.log('Background Render')
     return <div className="bg">
         <Canvas>
             <Render />

@@ -4,6 +4,7 @@
     display: flex;
     align-items: center;
     color: black;
+    font-size: min(1vw, 1em);
     // opacity: 0;
     // justify-content: center;
     // inset: 10rem;
@@ -20,7 +21,7 @@
 .project-infos {
     width: 50%;
     height: 100%;
-    padding: 0 7rem;
+    padding: 0 7em;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -39,7 +40,7 @@
 }
 
 .project-name {
-    font-size: 3rem;
+    font-size: 3em;
     font-family: 'Nanum Gothic Coding';
 
     // > div > div > div { // Needed to animate Artwork Name with GSAP and TextSplit
@@ -50,23 +51,25 @@
 .project-desc {
     // opacity: 0;
     margin: 5vh 0;
-    font-size: 1.5rem;
+    font-size: 1.5em;
     text-align: justify;
 }
 
 .project-button {
     --buton-color: black;
 
+    display: flex;
+    align-items: center;
+    justify-content: center;
     width: 100%;
     padding: 10px 0;
-    height: 3rem;
+    height: max(40px, 8vh);
     background-color: transparent;
     border: 3px solid var(--buton-color);
-    // margin-top: 5vh;
-    margin: 0.5rem 0;
+    margin: 0.5em 0;
     text-align: center;
     font-family: 'Nanum Gothic Coding';
-    font-size: 1.5rem;
+    font-size: 1.75em;
     text-transform: capitalize;
     -webkit-transition: ease-out 0.2s;
     -moz-transition: ease-out 0.2s;

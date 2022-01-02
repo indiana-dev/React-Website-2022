@@ -67,7 +67,7 @@ export default function Artwork({
         }, {
             y: 0,
             autoAlpha: 1,
-            ease: "power1",
+            ease: "power4",
             duration: 2,
         }).to(descRef.current, {
             autoAlpha: 0,

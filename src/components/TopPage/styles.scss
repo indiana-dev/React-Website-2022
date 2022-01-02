@@ -10,21 +10,22 @@
     box-sizing: border-box;
     mix-blend-mode: difference;
     // justify-content: center;
+    font-size: min(3em, 3vw);
 }
 
 .name {
-    font-size: 12rem;
+    font-size: 4em;
     text-align: left;
     font-family: 'Unica One', cursive;
     margin: 0 15vh;
 }
 
 .title {
-    font-size: 3rem;
+    font-size: 1em;
     // position: absolute;
     // right: 10vw;
     // bottom: 12rem;
-    padding-right: 15rem;
+    padding-right: 5em;
     text-align: end;
     white-space: nowrap;
     font-family: 'Antic Slab', sans-serif;

@@ -13,7 +13,7 @@ export default function ArtworkManager() {
 
     useEffect(() => {
         const getTotalHeight = () => {
-            return Artworks.reduce((a, b) => (a.vh ?? a) + b.vh) * window.innerHeight
+            return [Artworks, Projects][current].reduce((a, b) => (a.vh ?? a) + b.vh) * window.innerHeight
         }  
 
         // Main Content Pinning

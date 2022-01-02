@@ -14,7 +14,7 @@ export const scrollTrigger = {
 
 export default function TopPage() {   
     const [contentIndex, setContentIndex] = useState(0)
-    const [contentProgress, setContentProgress] = useState(1)
+    // const [contentProgress, setContentProgress] = useState(1)
 
     gsap.registerPlugin(ScrollToPlugin);
 
@@ -106,7 +106,7 @@ export default function TopPage() {
         <div className="name" id="name">Alexandre</div>
         <div className="name" id="lastname">Bizord</div>
         <div className="title" id="title">Digital Artist & Developer</div>
-        <ContentSelector index={contentIndex} progress={contentProgress} />
+        <ContentSelector index={contentIndex} />
         {/* <div className="show-artworks" ref={showArtworkRef}>
             <p onClick={() => {
                 gsap.to(window, {duration: 0.75, scrollTo:{y: "#content", offsetY: -300}, ease:'power2'});
