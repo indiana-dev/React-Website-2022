@@ -1,5 +1,9 @@
 import gsap from 'gsap/all'
 import { useEffect, useRef } from 'react'
+import ProjectASL from './ProjectASL'
+import ProjectCausality from './ProjectCausality'
+import ProjectJetpack from './ProjectJetpack'
+import ProjectLandscape from './ProjectLandscape'
 import './styles.scss'
 
 export default function Project({
@@ -39,7 +43,7 @@ export default function Project({
             },
             onReverseComplete: () => {
                 containerRef.current.style.display = 'none'
-            }
+            },
         }).from(infoRef.current.children, {
             autoAlpha: 0,
             rotateY: -90,
@@ -67,8 +71,17 @@ export default function Project({
         }
     }, [project, first])
 
-    console.log('first',first,project.name)
-    return <div className={'project-container' + (!first||true ? ' absolute-container' : '')} ref={containerRef}>
+    function buildProject() {
+        switch (project.id) {
+            case 'asl': return <ProjectASL project={project} />
+            case 'causality': return <ProjectCausality project={project} />
+            case 'jetpack': return <ProjectJetpack project={project} />
+            case 'landscape': return <ProjectLandscape project={project} />
+            default: return null
+        }
+    }
+
+    return <div className='project-container absolute-container' ref={containerRef}>
         <div className='project-infos' ref={infoRef}>
                 <div className='project-name' ref={nameRef}>{project.name}</div>
                 <div className='project-desc' ref={descRef}>
@@ -76,6 +89,9 @@ export default function Project({
                 </div>
                 <div className='project-button learn-more-btn'>Learn More</div>
                 <div className='project-button open-github-btn'>Open on Github</div>
+        </div>
+        <div className='project-media'>
+            {buildProject()}
         </div>
     </div>
 }

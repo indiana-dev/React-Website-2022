@@ -1,11 +1,9 @@
 class ProjectData {
     constructor(p, offset) {
+        this.id = p.id
         this.name = p.name
         this.skills = p.skills
         this.description = p.description
-        this.imagesPath = p.imagesPath
-        this.imagesCount = p.imagesCount
-        this.video = p.video
         this.vh = p.vh
         this.offset = offset
     }
@@ -14,9 +12,9 @@ class ProjectData {
         return {
             ...options,
             trigger: '.content',
-            start: 'top top-=' + this.offset,
+            start: 'top top-=' + this.offset + 'px',
             end: "+=" + (100*this.vh) + "%",
-            // fastScrollEnd: true,
+            
         }
     }
 }

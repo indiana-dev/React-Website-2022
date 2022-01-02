@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { OrthographicCamera, shaderMaterial } from '@react-three/drei'
 import { extend, useFrame } from '@react-three/fiber'
 import { Canvas } from '@react-three/fiber'
@@ -60,7 +60,10 @@ class Camera {
         this.right = this.front.clone().cross(new Vector3(0, 1, 0)).normalize()
         this.up = this.right.clone().cross(this.front).normalize()
 
-        this.viewMatrix = lookAt(this.pos.clone(), this.pos.clone().add(this.front), this.up.clone()).transpose()
+        let abs = Math.abs(this.pitch%360)
+        let upsideDown = abs >= 90 && abs <= 270
+
+        this.viewMatrix = lookAt(this.pos.clone(), this.pos.clone().add(this.front), upsideDown ? this.up.clone().negate() : this.up.clone()).transpose()
     }
 }
 
@@ -82,7 +85,7 @@ const ColorShiftMaterial = shaderMaterial(
 
 function Render() {
     const res = new Vector2(window.innerWidth, window.innerHeight)
-    let [cam, ] = useState(new Camera()) 
+    let [cam] = useState(new Camera()) 
     const timeRef = useRef(null)
 
     useFrame(({clock}) => {
@@ -99,8 +102,7 @@ function Render() {
         }
     })
 
-    function mouseMove(e) {
-        let { screenX: x, screenY: y } = e
+    function mouseMove({ screenX: x }) {
         if (window.scrollY > window.innerHeight/2) return
         const animDuration = 0.5
         if (x > window.innerWidth/2 && timeRef.current.progress === 0) {
@@ -110,19 +112,10 @@ function Render() {
         }
     }
 
-    function changeUniform() {
-        // console.log('click', cam)
-        // cam.pos.x = 0.5
-        // cam.pos.y=2
-        // cam.pos.z = 0.1
-        // cam.updateViewMatri0+
-        // setCam({...cam})
-    }
-
     useEffect(() => {
         ScrollTrigger.create({
             onUpdate: (self) => {
-                const max = 3
+                const max = 2
                 let vel = self.getVelocity()
                 vel = Math.sqrt(Math.abs(vel))*Math.sign(vel)*0.0005
 
@@ -131,9 +124,9 @@ function Render() {
         })
 
         window.addEventListener('mousemove', mouseMove)
-    }, [])
+    })
 
-    return <OrthographicCamera makeDefault args={[ - 1, 1, 1, - 1, 0, 1]} onClick={changeUniform}>
+    return <OrthographicCamera makeDefault args={[-1, 1, 1, -1, 0, 1]}>
         <mesh>
             <planeBufferGeometry args={[window.innerWidth, window.innerHeight]} />
             <colorShiftMaterial attach="material" color="hotpink" 

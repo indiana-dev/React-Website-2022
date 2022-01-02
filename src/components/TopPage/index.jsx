@@ -1,7 +1,6 @@
 import gsap, { ScrollToPlugin } from "gsap/all";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { SplitText } from '../../libraries/Split3.min'
-import { FaChevronDown } from 'react-icons/fa';
 import ContentSelector from "../ContentSelector";
 import './styles.scss'
 
@@ -17,7 +16,6 @@ export default function TopPage() {
     const [contentIndex, setContentIndex] = useState(0)
     const [contentProgress, setContentProgress] = useState(1)
 
-    const showArtworkRef = useRef()
     gsap.registerPlugin(ScrollToPlugin);
 
     useEffect(() => {
@@ -73,7 +71,7 @@ export default function TopPage() {
                 end: "top top",
                 scrub: 2,
             },
-            left: 0
+            x: '-50vw'
         })
 
         // Show Artworks Scrub Animation
@@ -89,15 +87,17 @@ export default function TopPage() {
     }, [])
 
     function onMouseMove({ screenX: x, screenY: _ }) {
-        if (window.scrollY > window.innerHeight/2) return
-        const obj = {progress: 1}
-        const animDuration = 0.1
+        if (window.scrollY > 1) return
+        // if (window.scrollY > window.innerHeight/2) return
+
+        // const obj = {progress: 1}
+        // const animDuration = 0.1
         if (x > window.innerWidth/2 && contentIndex === 0) {
-            gsap.to(obj, {progress: 0, duration: animDuration, ease: 'none', onUpdate: (e) => setContentProgress(obj.progress)})
+            // gsap.to(obj, {progress: 0, duration: animDuration, ease: 'none', onUpdate: (e) => setContentProgress(obj.progress)})
             setContentIndex(1)
         } else if (x < window.innerWidth/2 && contentIndex === 1) {
-            let obj = {progress: 1}
-            gsap.to(obj, {progress: 0, duration: animDuration, ease: 'none', onUpdate: (e) => setContentProgress(obj.progress)})
+            // let obj = {progress: 1}
+            // gsap.to(obj, {progress: 0, duration: animDuration, ease: 'none', onUpdate: (e) => setContentProgress(obj.progress)})
             setContentIndex(0)
         }
     }

@@ -1,5 +1,5 @@
 import ScrollTrigger from "gsap/ScrollTrigger";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import Artworks from "../../artworks";
 import Artwork from "../Artwork";
 import ArtworkData from '../../classes/ArtworkData'
@@ -10,33 +10,35 @@ import Projects from "../../projects";
 
 export default function ArtworkManager() {  
     const [current, setCurrent] = useState(0)
-    const mainContentPinning = useRef(null)
-
-    function mouseMove({ screenX: x, screenY: _ }) {
-        if (window.scrollY > window.innerHeight/2) return
-        if (x > window.innerWidth/2 && current === 0) {
-            setCurrent(1)
-        } else if (x < window.innerWidth/2 && current === 1) {
-            setCurrent(0)
-        }
-    }
 
     useEffect(() => {
         const getTotalHeight = () => {
             return Artworks.reduce((a, b) => (a.vh ?? a) + b.vh) * window.innerHeight
         }  
 
-        if (mainContentPinning.current) mainContentPinning.current.kill()
-
         // Main Content Pinning
-        mainContentPinning.current = ScrollTrigger.create({
+        let pin = ScrollTrigger.create({
             trigger: ".content",
             end: "+=" + getTotalHeight(),
             pin: true,
             anticipatePin: true,
         });
 
+        function mouseMove({ screenX: x, screenY: _ }) {
+            if (window.scrollY > window.innerHeight/2) return
+            if (x > window.innerWidth/2 && current === 0) {
+                setCurrent(1)
+            } else if (x < window.innerWidth/2 && current === 1) {
+                setCurrent(0)
+            }
+        }
+
         window.addEventListener('mousemove', mouseMove)
+
+        return () => {
+            pin.kill()
+            window.removeEventListener('mouseMove', mouseMove)
+        }
     }, [current])
         
     
@@ -79,7 +81,6 @@ export default function ArtworkManager() {
         return projects
     }
 
-    console.log('current', current)
     return <div className="content" id="content">
          {current === 0 ? buildArtworks() : buildProjects()}
     </div>
