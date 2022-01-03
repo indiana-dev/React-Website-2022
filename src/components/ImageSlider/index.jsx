@@ -7,10 +7,10 @@ export default function ImageSlider({
     horizontal_align,
     artwork,
 }) {
-    const vh = window.innerHeight
     const slider = useRef()
 
     useEffect(() => {
+        const vh = window.innerHeight
         const elmHeight = slider.current.clientHeight
 
         let tl = new gsap.timeline({
@@ -28,6 +28,10 @@ export default function ImageSlider({
         }).set(slider.current, {
             autoAlpha: 0
         })
+
+        return () => {
+            tl.kill()
+        }
     })
 
     function createImages() {

@@ -25,6 +25,10 @@ export default function VideoSlider({
             stagger: 1,
             ease: 'expo',
         }, '<+=1')
+
+        return () => {
+            tl.kill()
+        }
     })
 
     function createVideos() {

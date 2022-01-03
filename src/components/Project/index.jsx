@@ -8,31 +8,35 @@ import './styles.scss'
 
 export default function Project({
     first=false,
-    project
+    project,
+    setShowDetails
 }) {
+    const timeline = useRef()
     const containerRef = useRef()
     const infoRef = useRef()
     const nameRef = useRef()
     const descRef = useRef()
 
+    function clickOnShowDetails() {
+        setShowDetails(project.id)
+    }
+
     useEffect(() => {
         const duration = 0.3
         const stagger = 0.1
 
-        let t = new gsap.timeline({
+        timeline.current = new gsap.timeline({
             scrollTrigger: project.scrollTrigger({
                 toggleActions: 'restart none none none',
                 onLeave: () => {
-                    if (t.reversed()) t.play('Appear')
-                    else t.resume('Appear')
+                    timeline.current.play('Appear')
                 },
                 onEnterBack: () => {
                     containerRef.current.style.display = 'flex'
-                    t.reverse('Disappear')
+                    timeline.current.reverse(0)
                 },
                 onLeaveBack: () => {
-                    if (t.reversed()) t.resume()
-                    else t.reverse()
+                    timeline.current.reverse('Appear')
                 },
             }),
             onStart: () => {
@@ -50,7 +54,6 @@ export default function Project({
             duration: duration,
             stagger: stagger,
             ease: 'linear',
-            clearProps: 'transform',
         })
         .addPause()
         .addLabel('Appear')
@@ -60,14 +63,12 @@ export default function Project({
             duration: duration,
             stagger: stagger,
             ease: 'linear',
-            clearProps: 'transform'
         })
-        .addLabel('Disappear')
 
         if (!first) containerRef.current.style.display = 'none'
 
         return () => {
-            t.kill()
+            timeline.current.kill()
         }
     }, [project, first])
 
@@ -87,8 +88,8 @@ export default function Project({
                 <div className='project-desc' ref={descRef}>
                     {project.description}<br />
                 </div>
-                <div className='project-button learn-more-btn'>Learn More</div>
-                <div className='project-button open-github-btn'>Open on Github</div>
+                <button className='project-button learn-more-btn' onClick={clickOnShowDetails}>Learn More</button>
+                <button className='project-button open-github-btn'>Open on Github</button>
         </div>
         <div className='project-media'>
             {buildProject()}

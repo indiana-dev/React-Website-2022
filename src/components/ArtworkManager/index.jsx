@@ -1,5 +1,5 @@
 import ScrollTrigger from "gsap/ScrollTrigger";
-import { useEffect, useState } from "react";
+import { useEffect, useRef } from "react";
 import Artworks from "../../artworks";
 import Artwork from "../Artwork";
 import ArtworkData from '../../classes/ArtworkData'
@@ -8,36 +8,27 @@ import Project from "../Project";
 import ProjectData from "../../classes/ProjectData";
 import Projects from "../../projects";
 
-export default function ArtworkManager() {  
-    const [current, setCurrent] = useState(0)
+export default function ArtworkManager({
+    current,
+    setShowDetails
+}) {  
+    const ref = useRef()
 
-    useEffect(() => {
+    useEffect(() => {        
         const getTotalHeight = () => {
             return [Artworks, Projects][current].reduce((a, b) => (a.vh ?? a) + b.vh) * window.innerHeight
-        }  
-
+        }
+        
         // Main Content Pinning
         let pin = ScrollTrigger.create({
-            trigger: ".content",
+            trigger: ref.current,
             end: "+=" + getTotalHeight(),
             pin: true,
             anticipatePin: true,
         });
 
-        function mouseMove({ screenX: x, screenY: _ }) {
-            if (window.scrollY > window.innerHeight/2) return
-            if (x > window.innerWidth/2 && current === 0) {
-                setCurrent(1)
-            } else if (x < window.innerWidth/2 && current === 1) {
-                setCurrent(0)
-            }
-        }
-
-        window.addEventListener('mousemove', mouseMove)
-
         return () => {
             pin.kill()
-            window.removeEventListener('mouseMove', mouseMove)
         }
     }, [current])
         
@@ -48,12 +39,11 @@ export default function ArtworkManager() {
         let artworks = []
 
         for (let [i, p] of Object.entries(Artworks)) {
-            // console.log(i, p)
             artworks.push(
                 <Artwork 
                     // eslint-disable-next-line eqeqeq
                     first={i==0} 
-                    artwork={new ArtworkData(p, cumulated)} 
+                    artwork={new ArtworkData(p, cumulated, ref)} 
                     key={i}
                 />)
             cumulated += p.vh * vh
@@ -72,7 +62,8 @@ export default function ArtworkManager() {
                 <Project 
                     // eslint-disable-next-line eqeqeq
                     first={i==0} 
-                    project={new ProjectData(p, cumulated)} 
+                    project={new ProjectData(p, cumulated, ref)} 
+                    setShowDetails={setShowDetails}
                     key={i}
                 />)
             cumulated += p.vh * vh
@@ -81,7 +72,10 @@ export default function ArtworkManager() {
         return projects
     }
 
-    return <div className="content" id="content">
-         {current === 0 ? buildArtworks() : buildProjects()}
+    // Empty div needed to fix GSAP/ScrollTrigger/Pin bug : https://greensock.com/forums/topic/28327-scrolltrigger-breaks-react-router/?do=findComment&comment=149711
+    return <div>
+        <div className="content" id="content" ref={ref}>
+        { current === 0 ? buildArtworks() : buildProjects() }
+        </div>
     </div>
 }
