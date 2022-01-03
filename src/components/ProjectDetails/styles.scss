@@ -1,12 +1,151 @@
+@import url('https://fonts.googleapis.com/css?family=Montserrat');
+
 .project-details {
-    // width: 100%;
-    // height: 100%;
-    // background-color: rgba(255, 100, 100, 0.2);
-    // position: absolute;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: rgb(68, 66, 66);
+    padding-top: 15vh;
 }
 
-.project-details-back-btn {
-    // position: fixed;
-    // right: 0;
-    // bottom: 0;
+.project-details-md {
+    width: min(80%, 900px);
+    font-family: Montserrat, sans-serif;
+    line-height: 1.5;
+    text-align: justify;
+
+    h1 {
+        font-size: 2.5rem;
+    }
 }
+
+.project-details-back-button {
+    position: fixed;
+    left: 10%;
+    top: 40%;
+    font-size: 4em;
+    transform: translate(-50%, -50%);
+}
+
+/// Markdown
+
+.md-image-container {
+    display: flex;
+    flex-wrap: nowrap;
+    text-align: center;
+
+    >img {
+        display: block;
+        margin: 0;
+    }
+}
+
+.video-container {
+    width: 90%;
+    margin-inline: auto;
+
+    iframe {
+        aspect-ratio: 16/9;
+    }
+}
+
+.img-expand {
+    max-width: 100%;
+}
+
+.image-list {
+    text-align: center;
+    font-size: 75px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-around;
+
+    p {
+        font-size: 16px;
+    }
+
+    img {
+        width: 45%;
+    }
+}
+
+/// Github Button
+
+$cut: 550px;
+
+.link_wrapper{
+    position: relative;
+    margin-top: 4em;
+    width: 70%;
+    
+    a{
+      cursor: none;
+      display: block;
+      height: 50px;
+      line-height: 50px;
+      font-weight: bold;
+      text-decoration: none;
+      background: #333;
+      text-align: center;
+      color: #fff;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      border: 3px solid #333;
+      transition: all .35s;
+      margin: 0 20%;
+  
+      @media only screen and (max-width: $cut) {
+        font-size: 15px;
+        margin: 0 7%;
+      }
+    }
+  
+  
+    a:hover{
+      margin: 0 15%;
+      border: 3px solid #2ecc71;
+      background: transparent;
+      color: #2ecc71;
+      letter-spacing: 2px;
+  
+      @media only screen and (max-width: $cut) {
+        margin: 0 4%;
+      }
+    }
+  
+    a:hover + .icon{
+      //border: 3px solid #2ecc71;
+      margin-right: 15%;
+  
+      @media only screen and (max-width: $cut) {
+        margin-right: 4%;
+      }
+    }
+  
+    .icon{
+      width: 50px;
+      height: 50px;
+      border: 3px solid transparent;
+      position: absolute;
+      transform: rotate(45deg);
+      top: 0;
+      transition: all .35s;
+      margin-right: 20%;
+      right: 0;
+  
+      @media only screen and (max-width: $cut) {
+        margin-right: 7%;
+      }
+    }
+    
+    .icon svg{
+      width: 30px;
+      position: absolute;
+      top: calc(50% - 15px);
+      left: calc(50% - 15px);
+      transform: rotate(-45deg);
+      fill: #2ecc71;
+      transition: all .35s;
+    }  
+  }

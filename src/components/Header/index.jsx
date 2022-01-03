@@ -10,7 +10,7 @@ export default function Header() {
     const nameRef = useRef()
 
     useEffect(() => {
-        gsap.to(iconsRef.current, {
+        let t1 = gsap.to(iconsRef.current, {
             scrollTrigger: {
                 trigger: '.content',
                 start: 0,
@@ -22,7 +22,7 @@ export default function Header() {
             paddingTop: '2vh',
         })
 
-        gsap.fromTo(nameRef.current, {
+        let t2 = gsap.fromTo(nameRef.current, {
             autoAlpha: 0
         }, {
             scrollTrigger: {
@@ -32,7 +32,12 @@ export default function Header() {
             },
             autoAlpha: 1
         })
-    })
+        
+        return () => {
+            t1.kill()
+            t2.kill()
+        }
+    }, [])
 
     return <div className="header" ref={headerRef}>
         <div className="header-name" ref={nameRef}>Alexandre<br/>Bizord</div>

@@ -6,9 +6,10 @@ import ScrollTrigger from 'gsap/ScrollTrigger';
 import Header from './components/Header';
 import Background from './components/Background';
 import './App.css';
-import { useState } from 'react/cjs/react.development';
 import ProjectDetails from './components/ProjectDetails';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import Projects from './projects';
+import Footer from './components/Footer';
 
 function Body() {
   const [showDetails, setShowDetails] = useState(false)
@@ -21,6 +22,10 @@ function Body() {
     }
 
     setShowDetails(value)
+  }
+
+  function getCurrentProject() {
+    return Projects.filter(p => p.id === showDetails)[0]
   }
 
   useEffect(() => {
@@ -54,14 +59,15 @@ function Body() {
   return <> 
     <Background showDetails={showDetails} />
       { showDetails ? 
-        <ProjectDetails setShowDetails={setShowDetails_} /> 
+        <ProjectDetails setShowDetails={setShowDetails_} project={getCurrentProject()}/> 
         : 
         <>
           <TopPage />
           <ArtworkManager current={current} setShowDetails={setShowDetails_} />
-          <Header />
         </>
       }
+      <Footer />
+      <Header />
     </>
 }
 
