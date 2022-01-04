@@ -36,7 +36,7 @@ export default function ProjectDetails({
     useEffect(() => {
         window.scrollTo(0, 0)
 
-        let fadeIn = gsap.fromTo(ref.current, {
+        gsap.fromTo(ref.current, {
             scale: 0.8,
         }, {
             autoAlpha: 1,
@@ -44,10 +44,6 @@ export default function ProjectDetails({
             duration: 0.5,
             ease: 'power2'
         })
-
-        return () => {
-            
-        }
     }, [])
 
     // Back button hover effect

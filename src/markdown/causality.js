@@ -1,4 +1,4 @@
-export default `<br>
+const md = `<br>
 
 # Causality : A time-reversal game
 <div class="video-container small" id="centered-thing">
@@ -108,3 +108,5 @@ Below is the footage of a medium-difficulty level being solved from beggining to
 <div class="video-container small" id="centered-thing">
 <iframe src="https://www.youtube.com/embed/GYdw3LMMXXQ?loop=1&modestbranding=1&showinfo=0&rel=0&iv_load_policy=3&fs=0&controls=0&disablekb=1"  frameborder="0"></iframe>
 </div>`
+
+export default md

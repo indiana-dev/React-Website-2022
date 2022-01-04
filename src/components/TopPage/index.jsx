@@ -1,5 +1,5 @@
 import gsap, { ScrollToPlugin } from "gsap/all";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { SplitText } from '../../libraries/Split3.min'
 import ContentSelector from "../ContentSelector";
 import './styles.scss'

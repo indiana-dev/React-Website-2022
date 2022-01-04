@@ -1,4 +1,4 @@
-export default `<br>
+const md = `<br>
 <div class="video-container" id="centered-thing">
 <iframe width="100%"
 src="https://www.youtube.com/embed/xekE2-Vgaos">
@@ -47,3 +47,5 @@ The problem is that you can't develop add-ins on a Graph 35+, this option is onl
 However, after some research on the internet, I learned that the software of a Graph 35+ and a Graph 75 is the same. Casio only restrain access to the full power and memory on a Graph 35+. It was quick until I found documentation and tutorials on how to flash the kernel of the Graph 35+ with the unbrideld kernel of a Graph 75.
 
 After this step, I started to learn about add-in development and the Casio SDK and got the idea to recreate the famous Jetpack Joyride mobile app for Casio.`
+
+export default md

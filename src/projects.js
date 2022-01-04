@@ -38,4 +38,12 @@ const Projects = [
     }, 
 ]
 
+export function getTotalHeight(vh) {
+    let h = 0
+    for (let p of Projects) {
+        h += vh*p.vh
+    }
+    return h
+}
+
 export default Projects

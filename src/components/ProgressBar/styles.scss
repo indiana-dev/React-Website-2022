@@ -1,0 +1,28 @@
+.progress-bar {
+    position: absolute;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    inset: 0px 35%;
+    opacity: 0;
+
+    // background-color: red;
+}
+
+.progress-background-line {
+    position: absolute;
+    width: 0%;
+    height: 10px;
+    background-color: black;
+}
+
+.progress-dot {
+    width: min(3vh, 2vw);
+    height: min(3vh, 2vw);
+    border-radius: 9999px;
+    border: solid  2px black;
+
+    &.selected {
+        background-color: black;
+    }
+}

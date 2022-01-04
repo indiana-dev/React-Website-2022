@@ -1,4 +1,4 @@
-export default `# The Project
+const md = `# The Project
 During my fourth year of engineering school, I had the opportunity to make an internship inside the Fablab of Capgemini's Applied Innovation Exchange. My final project was to build a neural network capable of recognizing the American Sign Language's alphabet in real time through a webcam input.
 
 All the project is made with Python 3. The main libraries that I used are :
@@ -32,5 +32,6 @@ An example of all of these features can be shown in the demonstration below :
 <iframe width="100%" 
 src="https://www.youtube.com/embed/XoeKoQWkRt0">
 </iframe>
-</div>
-`
+</div>`
+
+export default md

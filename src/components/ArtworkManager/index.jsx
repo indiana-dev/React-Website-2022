@@ -58,6 +58,7 @@ export default function ArtworkManager({
         let projects = []
 
         for (let [i, p] of Object.entries(Projects)) {
+            console.log(new ProjectData(p, cumulated, ref))
             projects.push(
                 <Project 
                     // eslint-disable-next-line eqeqeq
