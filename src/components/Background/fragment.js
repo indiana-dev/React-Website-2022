@@ -38,7 +38,11 @@ float noise(vec3 p){
 // DISTANCE FUNCTIONS
 
 float wave(float min, float max, float frequency) {
-    return (sin(time*frequency/10.-3.141592/2.)+1.)/2.*(max-min)+min;
+  float s = sin(time*frequency/8.-3.141592/2.);
+  s = (s+1.)/2.;
+  s *= s * sign(s);
+  float v = s*(max-min)+min;
+  return v;
 }
 
 vec3 opElongate( in vec3 p, in vec3 h )
@@ -47,13 +51,19 @@ vec3 opElongate( in vec3 p, in vec3 h )
     return  q ;
 }
 
+float sdBox( vec3 p, vec3 b )
+{
+  vec3 q = abs(p) - b;
+  return length(max(q,0.0)) + min(max(q.x,max(q.y,q.z)),0.0);
+}
+
 float fRepeatedSphere(vec3 p, float r) {
   vec3 s = vec3(10.);
   vec3 c = floor((p+0.5*s)/s);
   vec3 q = mod(p+0.5*s,s)-0.5*s;
 
-  q = opElongate(q, vec3(0., wave(0., 4.5, 2.)+noise(p)*0., 0.));
-  return length(q) - r;
+  q = opElongate(q, vec3(0., wave(0., 4.75, 2.)+noise(p)*0., 0.));
+  return mix(length(q) - r, sdBox(q, vec3(1.)), progress);
 }
 
 // SCENE
@@ -110,7 +120,8 @@ void main() {
 
   // Didn't hit anything
   if (type < 0.) {
-      gl_FragColor = vec4(vUv.x < progress ? .9 : 0.);//vec4(0.,0.,0.,1.);//vec4(.2, .2, .2, 1.);
+      // gl_FragColor = vec4(vUv.x < progress ? .9 : 0.);//vec4(0.,0.,0.,1.);//vec4(.2, .2, .2, 1.);
+      gl_FragColor = vec4(vec3(mix(0., .9, progress)), 1.);
       return;
   }
 
@@ -121,10 +132,14 @@ void main() {
 
   float d = dist/((sin(time)+1.)*250.+200.) + 0.5/dist;
   vec3 col = vec3(d, 0.01*dist*0.25, 0.01*dist*0.5);
-  
-  col = vUv.x < progress ? vec3(.8) : col;
+  // col = vUv.x < progress ? vec3(.8) : col;
+  col = mix(col, vec3(0.), fog);
 
-  vec3 finalColor = mix(col, vec3(vUv.x < progress ? .9 : 0.), fog);
+  vec3 col2 = vec3(.8);
+  col2 = mix(col2, vec3(.9), fog);
+
+  // vec3 finalColor = mix(col, vec3(vUv.x < progress ? .9 : 0.), fog);
+  vec3 finalColor = mix(col, col2, progress);
 
 //   vec3 finalColor = mix(col, vec3(0.), max(0.6,dist/1000.));
   gl_FragColor = vec4(finalColor, 1.);

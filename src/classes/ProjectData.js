@@ -16,7 +16,7 @@ class ProjectData {
             trigger: this.contentRef.current,
             start: this.first ? 'top center' : 'top top-=' + this.offset + 'px',
             end: "+=" + (100*(this.vh + 0.5*this.first)) + "%",
-            fastScrollEnd: 4000,
+            fastScrollEnd: 10000,
         }
     }
 }

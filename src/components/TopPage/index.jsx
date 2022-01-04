@@ -7,15 +7,14 @@ import './styles.scss'
 export const scrollTrigger = {
     trigger: '#name',
     start: 0,
-    end: 800,//"+800",
+    end: 800,
     scrub: 2,
-    // markers: true,
 }
 
-export default function TopPage() {   
-    const [contentIndex, setContentIndex] = useState(0)
-    // const [contentProgress, setContentProgress] = useState(1)
-
+export default function TopPage({
+    current,
+    setCurrent
+}) {   
     gsap.registerPlugin(ScrollToPlugin);
 
     useEffect(() => {
@@ -85,28 +84,12 @@ export default function TopPage() {
         //     letterSpacing: '0.3vw',
         // })
     }, [])
-
-    function onMouseMove({ screenX: x, screenY: _ }) {
-        if (window.scrollY > 1) return
-        // if (window.scrollY > window.innerHeight/2) return
-
-        // const obj = {progress: 1}
-        // const animDuration = 0.1
-        if (x > window.innerWidth/2 && contentIndex === 0) {
-            // gsap.to(obj, {progress: 0, duration: animDuration, ease: 'none', onUpdate: (e) => setContentProgress(obj.progress)})
-            setContentIndex(1)
-        } else if (x < window.innerWidth/2 && contentIndex === 1) {
-            // let obj = {progress: 1}
-            // gsap.to(obj, {progress: 0, duration: animDuration, ease: 'none', onUpdate: (e) => setContentProgress(obj.progress)})
-            setContentIndex(0)
-        }
-    }
     
-    return <div className="top" onMouseMove={onMouseMove}>
+    return <div className="top">
         <div className="name" id="name">Alexandre</div>
         <div className="name" id="lastname">Bizord</div>
-        <div className="title" id="title">Digital Artist & Developer</div>
-        <ContentSelector index={contentIndex} />
+        {/* <div className="title" id="title">Digital Artist & Developer</div> */}
+        <ContentSelector current={current} setCurrent={setCurrent} />
         {/* <div className="show-artworks" ref={showArtworkRef}>
             <p onClick={() => {
                 gsap.to(window, {duration: 0.75, scrollTo:{y: "#content", offsetY: -300}, ease:'power2'});

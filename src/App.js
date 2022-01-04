@@ -28,22 +28,22 @@ function Body() {
     return Projects.filter(p => p.id === showDetails)[0]
   }
 
-  useEffect(() => {
-    function mouseMove({ screenX: x, screenY: _ }) {
-      if (window.scrollY > window.innerHeight/2 || showDetails) return
-      if (x > window.innerWidth/2 && current === 0) {
-          setCurrent(1)
-      } else if (x < window.innerWidth/2 && current === 1) {
-          setCurrent(0)
-      }
-    }
+  // useEffect(() => {
+  //   function mouseMove({ screenX: x, screenY: _ }) {
+  //     if (window.scrollY > window.innerHeight/2 || showDetails) return
+  //     if (x > window.innerWidth/2 && current === 0) {
+  //         setCurrent(1)
+  //     } else if (x < window.innerWidth/2 && current === 1) {
+  //         setCurrent(0)
+  //     }
+  //   }
 
-    window.addEventListener('mousemove', mouseMove)
+  //   window.addEventListener('mousemove', mouseMove)
 
-    return () => {
-      window.removeEventListener('mousemove', mouseMove)
-    }
-  }, [current, showDetails])
+  //   return () => {
+  //     window.removeEventListener('mousemove', mouseMove)
+  //   }
+  // }, [current, showDetails])
 
   useEffect(() => {
     if (lastScrollY.current) {
@@ -57,12 +57,12 @@ function Body() {
   })
 
   return <> 
-    <Background showDetails={showDetails} />
+    <Background current={current} showDetails={showDetails} />
       { showDetails ? 
         <ProjectDetails setShowDetails={setShowDetails_} project={getCurrentProject()}/> 
         : 
         <>
-          <TopPage />
+          <TopPage current={current} setCurrent={setCurrent} />
           <ArtworkManager current={current} setShowDetails={setShowDetails_} />
         </>
       }

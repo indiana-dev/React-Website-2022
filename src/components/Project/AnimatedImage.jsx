@@ -16,7 +16,7 @@ export default function AnimatedImage({
 
     useEffect(() => {
         let offset = project.offset/window.innerHeight*100*0
-        let startDistance = 100 + start*project.vh*100 + offset
+        let startDistance = 120 + start*project.vh*100 + offset
         let endDistance = (1-end)*100*project.vh + offset
 
         let a = gsap.fromTo(ref.current, {
@@ -25,7 +25,7 @@ export default function AnimatedImage({
             x: center ? '-50%' : undefined,
         }, {
             scrollTrigger: project.scrollTrigger({
-                scrub: 2,             
+                scrub: 1,             
             }),
             yPercent: -120,
             y: endDistance + 'vh',

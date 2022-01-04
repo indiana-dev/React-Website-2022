@@ -9,8 +9,7 @@
     padding-top: 15vh;
     box-sizing: border-box;
     mix-blend-mode: difference;
-    // justify-content: center;
-    font-size: min(3em, 3vw);
+    font-size: min(3em, 5vh);
 }
 
 .name {
@@ -22,9 +21,6 @@
 
 .title {
     font-size: 1em;
-    // position: absolute;
-    // right: 10vw;
-    // bottom: 12rem;
     padding-right: 5em;
     text-align: end;
     white-space: nowrap;

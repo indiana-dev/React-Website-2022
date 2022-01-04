@@ -14,11 +14,26 @@ export default function Project({
     const timeline = useRef()
     const containerRef = useRef()
     const infoRef = useRef()
+    const mediaRef = useRef()
     const nameRef = useRef()
     const descRef = useRef()
 
     function clickOnShowDetails() {
-        setShowDetails(project.id)
+        const duration = 0.5
+        const ease = 'power2'
+
+        gsap.to(mediaRef.current, {
+            x: '100%',
+            duration: duration,
+            ease: ease,
+        })
+
+        gsap.to(infoRef.current, {
+            x: '-100%',
+            duration: duration,
+            ease: ease,
+            onComplete: () => setShowDetails(project.id)
+        })
     }
 
     useEffect(() => {
@@ -32,7 +47,7 @@ export default function Project({
                     timeline.current.play('Appear')
                 },
                 onEnterBack: () => {
-                    containerRef.current.style.display = 'flex'
+                    containerRef.current.style['pointer-events'] = ''
                     timeline.current.reverse(0)
                 },
                 onLeaveBack: () => {
@@ -40,13 +55,13 @@ export default function Project({
                 },
             }),
             onStart: () => {
-                containerRef.current.style.display = 'flex'
+                containerRef.current.style['pointer-events'] = ''
             },
             onComplete: () => {
-                containerRef.current.style.display = 'none'
+                containerRef.current.style['pointer-events'] = 'none'
             },
             onReverseComplete: () => {
-                containerRef.current.style.display = 'none'
+                containerRef.current.style['pointer-events'] = 'none'
             },
         }).from(infoRef.current.children, {
             autoAlpha: 0,
@@ -65,7 +80,7 @@ export default function Project({
             ease: 'linear',
         })
 
-        if (!first) containerRef.current.style.display = 'none'
+        if (!first) containerRef.current.style['pointer-events'] = 'none'
 
         return () => {
             timeline.current.kill()
@@ -91,7 +106,7 @@ export default function Project({
                 <button className='project-button learn-more-btn' onClick={clickOnShowDetails}>Learn More</button>
                 <button className='project-button open-github-btn'>Open on Github</button>
         </div>
-        <div className='project-media'>
+        <div className='project-media' ref={mediaRef}>
             {buildProject()}
         </div>
     </div>

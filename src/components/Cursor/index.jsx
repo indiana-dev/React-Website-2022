@@ -1,11 +1,12 @@
-import React from "react";
+import { useContext, useEffect, useRef } from 'react';
+import { CursorContext } from '../../context/CursorContext';
 import './styles.scss'
 
 export default function Cursor() {
-    // const { type } = useContext(CustomCursorContext);
-    const secondaryCursor = React.useRef(null);
-    const mainCursor = React.useRef(null);
-    const positionRef = React.useRef({
+    const { type } = useContext(CursorContext);
+    const secondaryCursor = useRef(null);
+    const mainCursor = useRef(null);
+    const positionRef = useRef({
       mouseX: 0,
       mouseY: 0,
       destinationX: 0,
@@ -15,7 +16,7 @@ export default function Cursor() {
       key: -1,
     });
   
-    React.useEffect(() => {
+    useEffect(() => {
       document.addEventListener("mousemove", (event) => {
         const { clientX, clientY } = event;
   
@@ -34,7 +35,7 @@ export default function Cursor() {
       return () => {};
     }, []);
   
-    React.useEffect(() => {
+    useEffect(() => {
       const followMouse = () => {
         positionRef.current.key = requestAnimationFrame(followMouse);
         const {
@@ -67,13 +68,16 @@ export default function Cursor() {
       };
       followMouse();
     }, []);
+
+    const classType = 'cursor-type-' + type
+
     return (
       <div>
-        <div className="main-cursor" ref={mainCursor}>
-          <div className="main-cursor-background"></div>
+        <div className={"main-cursor "+classType} ref={mainCursor}>
+          <div className={"main-cursor-background "+classType}></div>
         </div>
-        <div className="secondary-cursor" ref={secondaryCursor}>
-          <div className="cursor-background"></div>
+        <div className={"secondary-cursor "+classType} ref={secondaryCursor}>
+          <div className={"cursor-background "+classType}></div>
         </div>
       </div>
     );

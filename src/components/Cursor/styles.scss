@@ -13,10 +13,15 @@
   mix-blend-mode: difference;
 
   .main-cursor-background {
+    transition: all 0.2s ease-out;
     width: 30px;
     height: 30px;
     background: #dbbaba;
     border-radius: 50%;
+
+    &.cursor-type-1 {
+      transform: scale(0.6)
+    }
   }
 }
 
@@ -25,31 +30,36 @@
   height: 60px;
 
   .cursor-background {
+    transition: all 0.2s ease-out;
     width: 100%;
     height: 100%;
     border-radius: 50%;
     border: 2px solid #f19393;
     position: relative;
-    &:after,
-    &:before {
-      content: "";
-      width: 3px;
-      height: 3px;
-      border-radius: 50%;
-      background: white;
-      display: block;
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-      animation: fadeOut 0.75s cubic-bezier(0.77, 0, 0.175, 1) 0s forwards;
-    }
-    &:before {
-      left: 10px;
-    }
 
-    &:after {
-      right: 10px;
+    &.cursor-type-1 {
+      transform: scale(1.5)
     }
+    // &:after,
+    // &:before {
+    //   content: "";
+    //   width: 3px;
+    //   height: 3px;
+    //   border-radius: 50%;
+    //   background: white;
+    //   display: block;
+    //   position: absolute;
+    //   top: 50%;
+    //   transform: translateY(-50%);
+    //   animation: fadeOut 0.75s cubic-bezier(0.77, 0, 0.175, 1) 0s forwards;
+    // }
+    // &:before {
+    //   left: 10px;
+    // }
+
+    // &:after {
+    //   right: 10px;
+    // }
   }
 }
 

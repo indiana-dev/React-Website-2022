@@ -86,12 +86,20 @@ const ColorShiftMaterial = shaderMaterial({
 extend({ ColorShiftMaterial })
 
 function Render({
+    current,
     showDetails
 }) {
     const [resolution, setResolution] = useState([window.innerWidth, window.innerHeight])
     const timeRef = useRef(null)
     const camera = useRef(new Camera()) 
     let cam = camera.current
+
+    useEffect(() => {
+        console.log('Current', current)
+        const animDuration = 0.5
+        if (current === 1) gsap.to(timeRef.current, {progress: 1, duration: animDuration, ease: 'power2.inOut'})
+        else if (current === 0) gsap.to(timeRef.current, {progress: 0, duration: animDuration, ease: 'power2.inOut'})
+    }, [current])
 
     useFrame(({clock}) => {
         timeRef.current.time = clock.getElapsedTime()
@@ -110,7 +118,7 @@ function Render({
     useEffect(() => {
         ScrollTrigger.create({
             onUpdate: (self) => {
-                const max = 1
+                const max = 0.25
                 let vel = self.getVelocity()
                 vel = Math.sqrt(Math.abs(vel))*Math.sign(vel)*0.0005
         
@@ -130,21 +138,21 @@ function Render({
     }, [cam])
 
     useEffect(() => {
-        function mouseMove({ screenX: x }) {
-            if (window.scrollY > window.innerHeight/2 || showDetails) return
-            const animDuration = 0.5
-            if (x > window.innerWidth/2 && timeRef.current.progress === 0) {
-                gsap.to(timeRef.current, {progress: 1, duration: animDuration, ease: 'power2.inOut'})
-            } else if (x < window.innerWidth/2 && timeRef.current.progress === 1) {
-                gsap.to(timeRef.current, {progress: 0, duration: animDuration, ease: 'power2.inOut'})
-            }
-        }
+        // function mouseMove({ screenX: x }) {
+        //     if (window.scrollY > window.innerHeight/2 || showDetails) return
+        //     const animDuration = 0.5
+        //     if (x > window.innerWidth/2 && timeRef.current.progress === 0) {
+        //         gsap.to(timeRef.current, {progress: 1, duration: animDuration, ease: 'power2.inOut'})
+        //     } else if (x < window.innerWidth/2 && timeRef.current.progress === 1) {
+        //         gsap.to(timeRef.current, {progress: 0, duration: animDuration, ease: 'power2.inOut'})
+        //     }
+        // }
 
-        window.addEventListener('mousemove', mouseMove)
+        // window.addEventListener('mousemove', mouseMove)
 
-        return () => {
-            window.removeEventListener('mousemove', mouseMove)
-        }
+        // return () => {
+        //     window.removeEventListener('mousemove', mouseMove)
+        // }
     }, [showDetails])
 
     console.log('Background Render')
@@ -164,11 +172,12 @@ function Render({
 }
 
 export default function Background({
+    current,
     showDetails
 }) {
     return <div className="bg">
         <Canvas>
-            <Render showDetails={showDetails} />
+            <Render current={current} showDetails={showDetails} />
         </Canvas>
     </div>
 }

@@ -3,10 +3,13 @@ import ReactDOM from 'react-dom';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import './index.css';
+import CursorContextProvider from './context/CursorContext';
 
 ReactDOM.render(
   <React.StrictMode>
+    <CursorContextProvider>
       <App />
+    </CursorContextProvider>
   </React.StrictMode>,
   document.getElementById('root')
 );
