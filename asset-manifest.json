@@ -1,23 +1,23 @@
 {
   "files": {
-    "main.css": "/React-Website-2022/static/css/main.3781878a.chunk.css",
-    "main.js": "/React-Website-2022/static/js/main.d66373ae.chunk.js",
-    "main.js.map": "/React-Website-2022/static/js/main.d66373ae.chunk.js.map",
-    "runtime-main.js": "/React-Website-2022/static/js/runtime-main.9302461b.js",
-    "runtime-main.js.map": "/React-Website-2022/static/js/runtime-main.9302461b.js.map",
-    "static/js/2.a7dceb45.chunk.js": "/React-Website-2022/static/js/2.a7dceb45.chunk.js",
-    "static/js/2.a7dceb45.chunk.js.map": "/React-Website-2022/static/js/2.a7dceb45.chunk.js.map",
-    "static/js/3.3ddc01f5.chunk.js": "/React-Website-2022/static/js/3.3ddc01f5.chunk.js",
-    "static/js/3.3ddc01f5.chunk.js.map": "/React-Website-2022/static/js/3.3ddc01f5.chunk.js.map",
+    "main.css": "/React-Website-2022/static/css/main.96702a89.chunk.css",
+    "main.js": "/React-Website-2022/static/js/main.0a6ce93a.chunk.js",
+    "main.js.map": "/React-Website-2022/static/js/main.0a6ce93a.chunk.js.map",
+    "runtime-main.js": "/React-Website-2022/static/js/runtime-main.3f159d58.js",
+    "runtime-main.js.map": "/React-Website-2022/static/js/runtime-main.3f159d58.js.map",
+    "static/js/2.1af88cb4.chunk.js": "/React-Website-2022/static/js/2.1af88cb4.chunk.js",
+    "static/js/2.1af88cb4.chunk.js.map": "/React-Website-2022/static/js/2.1af88cb4.chunk.js.map",
+    "static/js/3.abca9033.chunk.js": "/React-Website-2022/static/js/3.abca9033.chunk.js",
+    "static/js/3.abca9033.chunk.js.map": "/React-Website-2022/static/js/3.abca9033.chunk.js.map",
     "index.html": "/React-Website-2022/index.html",
-    "static/css/main.3781878a.chunk.css.map": "/React-Website-2022/static/css/main.3781878a.chunk.css.map",
-    "static/js/2.a7dceb45.chunk.js.LICENSE.txt": "/React-Website-2022/static/js/2.a7dceb45.chunk.js.LICENSE.txt",
-    "static/js/main.d66373ae.chunk.js.LICENSE.txt": "/React-Website-2022/static/js/main.d66373ae.chunk.js.LICENSE.txt"
+    "static/css/main.96702a89.chunk.css.map": "/React-Website-2022/static/css/main.96702a89.chunk.css.map",
+    "static/js/2.1af88cb4.chunk.js.LICENSE.txt": "/React-Website-2022/static/js/2.1af88cb4.chunk.js.LICENSE.txt",
+    "static/js/main.0a6ce93a.chunk.js.LICENSE.txt": "/React-Website-2022/static/js/main.0a6ce93a.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
-    "static/js/runtime-main.9302461b.js",
-    "static/js/2.a7dceb45.chunk.js",
-    "static/css/main.3781878a.chunk.css",
-    "static/js/main.d66373ae.chunk.js"
+    "static/js/runtime-main.3f159d58.js",
+    "static/js/2.1af88cb4.chunk.js",
+    "static/css/main.96702a89.chunk.css",
+    "static/js/main.0a6ce93a.chunk.js"
   ]
 }
