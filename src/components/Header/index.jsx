@@ -1,7 +1,6 @@
 import gsap from "gsap/all";
 import { useEffect, useRef } from "react";
-import { FaDiscord, FaGithub, FaMailBulk, FaTwitter } from "react-icons/fa";
-import ProgressBar from "../ProgressBar";
+import { FaDiscord, FaEnvelope, FaGithub, FaTwitter } from "react-icons/fa";
 import './styles.scss'
 
 export default function Header({
@@ -21,6 +20,7 @@ export default function Header({
                 scale: 1,
                 paddingRight: 0,
                 paddingTop: 0,
+                autoAlpha: 1,
             }, {
                 scrollTrigger: {
                     trigger: '.content',
@@ -28,7 +28,7 @@ export default function Header({
                     end: "+=500",
                     scrub: 1
                 },
-                scale: 0.7,
+                scale: 0.9,
                 paddingRight: '2vw',
                 paddingTop: '2vh',
                 autoAlpha: current ? 0 : 1
@@ -54,12 +54,11 @@ export default function Header({
 
     return <div className="header" ref={headerRef}>
         <div className="header-name" ref={nameRef}>Alexandre<br/>Bizord</div>
-        <ProgressBar />
         <div className="header-icons" ref={iconsRef}>
-        <FaGithub size={iconSize}/>
-        <FaMailBulk size={iconSize}/>
-        <FaTwitter size={iconSize}/>
-        <FaDiscord size={iconSize}/>
+            <FaGithub size={iconSize}/>
+            <FaEnvelope size={iconSize}/>
+            <FaTwitter size={iconSize}/>
+            <FaDiscord size={iconSize}/>
         </div>
     </div>
 }

@@ -12,10 +12,14 @@
     left: 0;
 }
 
+// right progress bar : 8vw
+// width : 100-8 = 92
+// infos : 92*0.5 = 46
+// media : 92.0.5 = 46
 .project-infos {
-    width: 50%;
+    width: 46%;
     height: 100%;
-    padding: 0 7em;
+    padding: 0 6em;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -27,7 +31,7 @@
 }
 
 .project-media {
-    width: 50%;
+    width: 46%;
     height: 100%;
     position: relative;
 }
@@ -67,6 +71,20 @@
         box-shadow: inset 0 100px 0 1px var(--buton-color); // 1px prevents button flickering when animating with GSAP
         color: rgb(219, 197, 197);
         letter-spacing: 3px;
+    }
+}
+
+.open-github-btn {
+    &:hover {
+        box-shadow: inset 0 100px 0 1px #8defab; // 1px prevents button flickering when animating with GSAP
+        color: black;
+    }
+}
+
+.try-it-btn, .project-page-btn {
+    &:hover {
+        box-shadow: inset 0 100px 0 1px #94bee9; // 1px prevents button flickering when animating with GSAP
+        color: black;
     }
 }
 

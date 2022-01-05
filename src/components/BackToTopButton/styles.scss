@@ -1,0 +1,26 @@
+.back-to-top-btn {
+    position: fixed;
+    top: 50vh;
+    border-radius: 30px;
+    color: black;
+    border: solid 2px black;
+    padding: 20px 10px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    text-align: center;
+
+    p {
+        margin: 0;
+        padding: 0;
+        font-size: 1.5em;
+    }
+
+    transition: 0.25s;
+    &:hover {
+        background-color: black;
+        color: white;
+    }
+}

@@ -1,5 +1,6 @@
-import gsap, { ScrollToPlugin } from "gsap/all";
-import { useEffect } from "react";
+import gsap from "gsap/all";
+import { useEffect, useRef } from "react";
+import { FaChevronDown } from "react-icons/fa";
 import { SplitText } from '../../libraries/Split3.min'
 import ContentSelector from "../ContentSelector";
 import './styles.scss'
@@ -15,8 +16,7 @@ export default function TopPage({
     current,
     setCurrent
 }) {   
-    gsap.registerPlugin(ScrollToPlugin);
-
+    const showArtworkRef = useRef()
     useEffect(() => {
         let name = new SplitText("#name")
         let lastname = new SplitText("#lastname")
@@ -63,38 +63,38 @@ export default function TopPage({
         })
 
         // Title Scrub Animation
-        gsap.to('#title', {
-            scrollTrigger: {
-                trigger: '#title',
-                start: 0,
-                end: "top top",
-                scrub: 2,
-            },
-            x: '-50vw'
-        })
+        // gsap.to('#title', {
+        //     scrollTrigger: {
+        //         trigger: '#title',
+        //         start: 0,
+        //         end: "top top",
+        //         scrub: 2,
+        //     },
+        //     x: '-50vw'
+        // })
 
         // Show Artworks Scrub Animation
-        // gsap.to(showArtworkRef.current, {
-        //     scrollTrigger: {
-        //         start: 0,
-        //         end: "+=500",
-        //         scrub: 1,
-        //     },
-        //     autoAlpha: 0,
-        //     letterSpacing: '0.3vw',
-        // })
+        gsap.to(showArtworkRef.current, {
+            scrollTrigger: {
+                start: 0,
+                end: '+=' + window.innerHeight,
+                scrub: 0.5,
+            },
+            autoAlpha: 0,
+            letterSpacing: '0.3vw',
+        })
     }, [])
     
-    return <div className="top">
+    return <div className="top">    
         <div className="name" id="name">Alexandre</div>
         <div className="name" id="lastname">Bizord</div>
-        {/* <div className="title" id="title">Digital Artist & Developer</div> */}
+        <div className="title" id="title">Digital Artist & Developer</div>
         <ContentSelector current={current} setCurrent={setCurrent} />
-        {/* <div className="show-artworks" ref={showArtworkRef}>
+        <div className="show-artworks" ref={showArtworkRef}>
             <p onClick={() => {
                 gsap.to(window, {duration: 0.75, scrollTo:{y: "#content", offsetY: -300}, ease:'power2'});
-            }}>Scroll to see my artworks</p>
-            <FaChevronDown style={{transform: 'scaleX(1.5)'}}/>
-        </div>  */}
+            }}>Scroll down</p>
+            <FaChevronDown />
+        </div> 
     </div>
 }

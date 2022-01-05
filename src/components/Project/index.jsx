@@ -4,6 +4,7 @@ import ProjectASL from './ProjectASL'
 import ProjectCausality from './ProjectCausality'
 import ProjectJetpack from './ProjectJetpack'
 import ProjectLandscape from './ProjectLandscape'
+import ProjectTicTacToe from './ProjectTicTacToe'
 import './styles.scss'
 
 export default function Project({
@@ -93,6 +94,7 @@ export default function Project({
             case 'causality': return <ProjectCausality project={project} />
             case 'jetpack': return <ProjectJetpack project={project} />
             case 'landscape': return <ProjectLandscape project={project} />
+            case 'tictactoe': return <ProjectTicTacToe project={project} />
             default: return null
         }
     }
@@ -104,7 +106,9 @@ export default function Project({
                     {project.description}<br />
                 </div>
                 <button className='project-button learn-more-btn' onClick={clickOnShowDetails}>Learn More</button>
-                <button className='project-button open-github-btn'>Open on Github</button>
+                { project.github ? <button className='project-button open-github-btn' onClick={()=>window.open(project.github)}>Open on Github</button> : null }
+                { project.try_it ? <button className='project-button try-it-btn' onClick={()=>window.open(project.try_it)}>Live Demo</button> : null }
+                { project.project_page ? <button className='project-button project-page-btn' onClick={()=>window.open(project.project_page)}>Open Project Page</button> : null }
         </div>
         <div className='project-media' ref={mediaRef}>
             {buildProject()}

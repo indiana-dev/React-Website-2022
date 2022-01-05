@@ -108,7 +108,7 @@ function Render({
         cam.updateViewMatrix()
         timeRef.current.view_matrix = cam.viewMatrix
 
-        cam.pos.sub(cam.vel)
+        cam.pos.add(cam.front.clone().normalize().multiplyScalar(0.1+cam.vel.z))
 
         if (Math.abs(cam.vel.z) > base_speed) {
             cam.vel.z *= 0.98
@@ -137,24 +137,6 @@ function Render({
         }
     }, [cam])
 
-    useEffect(() => {
-        // function mouseMove({ screenX: x }) {
-        //     if (window.scrollY > window.innerHeight/2 || showDetails) return
-        //     const animDuration = 0.5
-        //     if (x > window.innerWidth/2 && timeRef.current.progress === 0) {
-        //         gsap.to(timeRef.current, {progress: 1, duration: animDuration, ease: 'power2.inOut'})
-        //     } else if (x < window.innerWidth/2 && timeRef.current.progress === 1) {
-        //         gsap.to(timeRef.current, {progress: 0, duration: animDuration, ease: 'power2.inOut'})
-        //     }
-        // }
-
-        // window.addEventListener('mousemove', mouseMove)
-
-        // return () => {
-        //     window.removeEventListener('mousemove', mouseMove)
-        // }
-    }, [showDetails])
-
     console.log('Background Render')
     return <OrthographicCamera makeDefault args={[-1, 1, 1, -1, 0, 1]}>
         <mesh>
@@ -168,7 +150,7 @@ function Render({
                 ref={timeRef} 
             />
         </mesh>
-        </OrthographicCamera>
+    </OrthographicCamera>
 }
 
 export default function Background({

@@ -1,21 +1,25 @@
 import TopPage from './components/TopPage';
 import Cursor from './components/Cursor';
 import ArtworkManager from './components/ArtworkManager';
-import gsap from 'gsap/all';
+import gsap, { ScrollToPlugin } from 'gsap/all';
 import ScrollTrigger from 'gsap/ScrollTrigger';
 import Header from './components/Header';
 import Background from './components/Background';
 import './App.css';
 import ProjectDetails from './components/ProjectDetails';
 import { useEffect, useRef, useState } from 'react';
-import Projects from './projects';
 import Footer from './components/Footer';
+import getProjects from './projects';
+import ProgressBar from './components/ProgressBar';
 
 function Body() {
   const [showDetails, setShowDetails] = useState(false)
   const [current, setCurrent] = useState(0)
   const lastScrollY = useRef(null)
+  const projects = useRef()
 
+  if (!projects.current) projects.current = getProjects()
+  
   function setShowDetails_(value) {
     if (value !== false) {
       lastScrollY.current = {value: window.scrollY, jumpTo: false}
@@ -25,7 +29,7 @@ function Body() {
   }
 
   function getCurrentProject() {
-    return Projects.filter(p => p.id === showDetails)[0]
+    return projects.current.filter(p => p.id === showDetails)[0]
   }
 
   useEffect(() => {
@@ -42,13 +46,14 @@ function Body() {
   return <> 
     <Background current={current} showDetails={showDetails} />
       { showDetails ? 
-        <ProjectDetails setShowDetails={setShowDetails_} project={getCurrentProject()}/> 
+        <ProjectDetails setShowDetails={setShowDetails_} project={getCurrentProject()} /> 
         : 
         <>
           <TopPage current={current} setCurrent={setCurrent} />
           <ArtworkManager current={current} setShowDetails={setShowDetails_} />
         </>
       }
+      <ProgressBar current={current} showDetails={showDetails} />
       <Footer />
       <Header current={current} showDetails={showDetails} />
     </>
@@ -56,6 +61,7 @@ function Body() {
 
 function App() {
   gsap.registerPlugin(ScrollTrigger);
+  gsap.registerPlugin(ScrollToPlugin);
 
   return <div>
       <div id="viewport">

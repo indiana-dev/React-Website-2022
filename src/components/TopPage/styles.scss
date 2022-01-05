@@ -22,7 +22,8 @@
 .title {
     font-size: 1em;
     padding-right: 5em;
-    text-align: end;
+    // text-align: end;
+    margin: 0 16vh;
     white-space: nowrap;
     font-family: 'Antic Slab', sans-serif;
     color: #ffc1c1;
@@ -30,22 +31,25 @@
 
 .show-artworks {
     position: absolute;
-    bottom: 5vh;
+    bottom: 0;
     display: flex;
     flex-direction: column;
     align-items: center;
     width: 100%;
+    font-size: 0.6em;
 
     p {
-        font-size: 2vw;
         font-family: 'Antic Slab', sans-serif;
         margin: 0;
-        margin-bottom: 1vh;
 
         transition: 0.15s;
 
         &:hover {
             transform: scale(1.25);
         }
+    }
+
+    svg {
+        margin: 10px 0;
     }
 }

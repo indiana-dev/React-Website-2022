@@ -5,18 +5,20 @@ import Artwork from "../Artwork";
 import ArtworkData from '../../classes/ArtworkData'
 import './styles.scss'
 import Project from "../Project";
-import ProjectData from "../../classes/ProjectData";
-import Projects from "../../projects";
+import getProjects from "../../projects";
 
 export default function ArtworkManager({
     current,
     setShowDetails
 }) {  
     const ref = useRef()
+    const projects = useRef()
+
+    if (!projects.current) projects.current = getProjects()
 
     useEffect(() => {        
         const getTotalHeight = () => {
-            return [Artworks, Projects][current].reduce((a, b) => (a.vh ?? a) + b.vh) * window.innerHeight
+            return ([Artworks, projects.current][current].reduce((a, b) => (a.vh ?? a) + b.vh) + 0.5) * window.innerHeight
         }
         
         // Main Content Pinning
@@ -53,24 +55,14 @@ export default function ArtworkManager({
     }
 
     function buildProjects() {
-        const vh = window.innerHeight
-        let cumulated = 0
-        let projects = []
-
-        for (let [i, p] of Object.entries(Projects)) {
-            console.log(new ProjectData(p, cumulated, ref))
-            projects.push(
-                <Project 
-                    // eslint-disable-next-line eqeqeq
-                    first={i==0} 
-                    project={new ProjectData(p, cumulated, ref)} 
-                    setShowDetails={setShowDetails}
-                    key={i}
-                />)
-            cumulated += p.vh * vh
-        }
-
-        return projects
+        return projects.current.map((p, i) => 
+            <Project 
+                first={i==='0'} 
+                project={p} 
+                setShowDetails={setShowDetails}
+                key={i}
+            />
+        )
     }
 
     // Empty div needed to fix GSAP/ScrollTrigger/Pin bug : https://greensock.com/forums/topic/28327-scrolltrigger-breaks-react-router/?do=findComment&comment=149711

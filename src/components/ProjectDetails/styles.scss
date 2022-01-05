@@ -107,10 +107,10 @@ $cut: 550px;
     width: 100%;
     align-self: center;
     
-    a{
+    span {
       cursor: none;
       display: block;
-      height: 50px;
+      height: 55px;
       line-height: 50px;
       font-weight: bold;
       text-decoration: none;
@@ -121,7 +121,7 @@ $cut: 550px;
       letter-spacing: 1px;
       border: 3px solid #333;
       transition: all .35s;
-      margin: 0 20%;
+      margin: 0 5%;
   
       @media only screen and (max-width: $cut) {
         font-size: 15px;
@@ -130,8 +130,8 @@ $cut: 550px;
     }
   
   
-    a:hover{
-      margin: 0 15%;
+    span:hover{
+      margin: 0 0%;
       border: 3px solid #2ecc71;
       background: transparent;
       color: #2ecc71;
@@ -142,7 +142,7 @@ $cut: 550px;
       }
     }
   
-    a:hover + .icon{
+    span:hover + .icon{
       //border: 3px solid #2ecc71;
       margin-right: 15%;
   

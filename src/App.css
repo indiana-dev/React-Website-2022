@@ -8,3 +8,7 @@
   cursor: none;
   overflow-x: none;
 }
+
+img, video {
+  border-radius: 5px;
+}
