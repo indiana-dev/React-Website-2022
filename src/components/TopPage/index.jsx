@@ -1,5 +1,5 @@
 import gsap from "gsap/all";
-import { useEffect, useRef } from "react";
+import { useRef } from "react";
 import { FaChevronDown } from "react-icons/fa";
 import { SplitText } from '../../libraries/Split3.min'
 import ContentSelector from "../ContentSelector";

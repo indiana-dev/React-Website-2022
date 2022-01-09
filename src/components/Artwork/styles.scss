@@ -9,7 +9,7 @@
     justify-content: center;
 
     @media (max-width: $mobile-break) {
-        flex-direction: column-reverse;
+        flex-direction: column;
     }
 }
 
@@ -85,10 +85,12 @@
 
 .artwork-pictures {
     position: relative;
-    min-height: 100%;
     flex: 3;
 
     @media (max-width: $mobile-break) {
-        min-height: 0;
+        width: 100%;
+        max-height: 50%;
+        max-width: 100%;
+        overflow-x: hidden;
     }
 }

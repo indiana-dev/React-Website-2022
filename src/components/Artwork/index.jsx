@@ -78,20 +78,33 @@ export default function Artwork({
         }
     }, [artwork, first, isMobile])
 
+    function buildArtworkPictures() {
+        return <div className='artwork-pictures'>
+            { artwork.video ? 
+                <VideoSlider artwork={artwork} /> 
+                : isMobile ? 
+                    <ImageSlider isMobile={true} artwork={artwork}/> 
+                    : 
+                    <>
+                        <ImageSlider direction="up" horizontal_align="left" artwork={artwork}/>
+                        <ImageSlider direction="down" horizontal_align="right" artwork={artwork}/>
+                    </>
+            }
+        </div>
+    }
+
+    function buildArtworkInfos() {
+        return <div className='artwork-infos'>
+            <div className='artwork-name' ref={nameRef}>{artwork.name}</div>
+            <div className='artwork-desc' ref={descRef}>
+                {artwork.description}<br />
+                <div className='artwork-button'>Not yet available</div>
+            </div>
+        </div>
+    }
+
     return <div className={'artwork-container' + (first ? '' : ' absolute-container')} ref={containerRef} >
-            <div className='artwork-pictures'>
-                { artwork.video ? <VideoSlider artwork={artwork} /> 
-                : <>
-                <ImageSlider direction="up" horizontal_align="left" artwork={artwork}/>
-                <ImageSlider direction="down" horizontal_align="right" artwork={artwork}/>
-                </>}
-            </div>
-            <div className='artwork-infos'>
-                <div className='artwork-name' ref={nameRef}>{artwork.name}</div>
-                <div className='artwork-desc' ref={descRef}>
-                    {artwork.description}<br />
-                    <div className='artwork-button'>Not yet available</div>
-                </div>
-            </div>
+            { isMobile ? buildArtworkInfos() : buildArtworkPictures() }
+            { isMobile ? buildArtworkPictures() : buildArtworkInfos() }
         </div> 
 }

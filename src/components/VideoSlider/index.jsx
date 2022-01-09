@@ -1,5 +1,6 @@
 import gsap, { SlowMo } from "gsap/all"
-import { useLayoutEffect, useRef } from "react"
+import { useContext, useLayoutEffect, useRef } from "react"
+import { MobileContext } from "../../context/MobileContext"
 import './styles.scss'
 
 gsap.registerPlugin(SlowMo)
@@ -8,23 +9,34 @@ export default function VideoSlider({
     artwork,
 }) {
     const slider = useRef()
+    const isMobile = useContext(MobileContext)
 
     useLayoutEffect(() => {
         let tl = new gsap.timeline({
             scrollTrigger: artwork.scrollTrigger({scrub: true})
         })
 
-        tl.to(slider.current.children, {
-            autoAlpha: 1,
-            scale: 1.5,
-            stagger: 1,
-            ease: 'expo',
-        }).to(slider.current.children, {
-            autoAlpha: 0,
-            scale: 2,
-            stagger: 1,
-            ease: 'expo',
-        }, '<+=1')
+        if (isMobile) {
+            tl = gsap.fromTo(slider.current, {
+                x: '100vw',
+                xPercent: 100
+            }, {
+                x: '-100vw',
+                xPercent: -100,
+                scrollTrigger: artwork.scrollTrigger({scrub: true})
+            })
+        }
+        else tl.to(slider.current.children, {
+                autoAlpha: 1,
+                scale: 1.5,
+                stagger: 1,
+                ease: 'expo',
+            }).to(slider.current.children, {
+                autoAlpha: 0,
+                scale: 2,
+                stagger: 1,
+                ease: 'expo',
+            }, '<+=1')
 
         return () => {
             tl.kill()

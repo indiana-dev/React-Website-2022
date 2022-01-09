@@ -1,13 +1,30 @@
+@import '../../App.scss';
+
 .image-slider {
-    opacity: 1;
     position: absolute;
     top: 0;
+    visibility: hidden;
 
     display: flex;
     flex-direction: column;
 
     img {
         height: 23vw;
+        margin: 2vh;
+        border-radius: 2%;
+    }
+}
+
+.image-slider-mobile {
+    display: flex;
+    height: 100%;
+    align-items: center;
+    // position: absolute;
+    bottom: 0;
+    left: 0;
+
+    img {
+        height: min(40vh, 60%);
         margin: 2vh;
         border-radius: 2%;
     }

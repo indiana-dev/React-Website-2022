@@ -1,3 +1,5 @@
+@import '../../App.scss';
+
 .video-slider {
     position: absolute;
     width: 100%;
@@ -17,6 +19,20 @@
         height: 20vw;
         border-radius: 2%;
         opacity: 0;
+    }
+
+    @media (max-width: $mobile-break) {
+        position: initial;
+        // overflow: hidden;
+        // max-width: 100%;
+        // gap: 5em;
+
+        video {
+            position: initial;
+            height: min(40vh, 60%);           
+            opacity: 1;
+            margin: 2.5em;
+        }
     }
 }
 
