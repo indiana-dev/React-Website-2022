@@ -1,9 +1,10 @@
 import gsap from 'gsap/all'
-import { useLayoutEffect, useRef } from 'react'
+import { useContext, useLayoutEffect, useRef } from 'react'
 import { SplitText } from '../../libraries/Split3.min'
 import VideoSlider from '../VideoSlider'
 import ImageSlider from '../ImageSlider'
 import './styles.scss'
+import { MobileContext } from '../../context/MobileContext'
 
 export default function Artwork({
     first=false,
@@ -12,9 +13,11 @@ export default function Artwork({
     const containerRef = useRef()
     const nameRef = useRef()
     const descRef = useRef()
+    const isMobile = useContext(MobileContext)
+    const nameChars = useRef()
 
     useLayoutEffect(() => {
-        let nameChars = new SplitText(nameRef.current).chars
+        if (!nameChars.current) nameChars.current = new SplitText(nameRef.current).chars
 
         let t = new gsap.timeline({
             scrollTrigger: artwork.scrollTrigger({
@@ -30,10 +33,11 @@ export default function Artwork({
                 },
             })
         })
-        .fromTo(nameChars, {
+        .fromTo(nameChars.current, {
             y: '100%',
+            autoAlpha: 0,
         }, {
-            y: 0,
+            y: '0%',
             autoAlpha: 1,
             stagger: 0.02,
             duration: 0.3,
@@ -41,26 +45,28 @@ export default function Artwork({
         })
         .addPause()
         .addLabel('Appear')
-        .to(nameChars, {
+        .to(nameChars.current, {
             autoAlpha: 0,
             y: '-100%',
             stagger: 0.02,
             duration: 0.3,
             ease: 'expo'
         })
-        .addLabel('Disappear')
 
         // Artwork Description Scrub Animation
         let tl = new gsap.timeline({
             scrollTrigger: artwork.scrollTrigger({scrub: 2})
-        })
+        })  
+
         tl.fromTo(descRef.current, {
-            y: 100,
+            y: isMobile ? 50 : 100,
+            autoAlpha: 0,
         }, {
-            y: 0,
             autoAlpha: 1,
-            ease: "power4",
+            y: 0,
+            ease: isMobile ? "power2" : "power4",
             duration: 2,
+            scale: 1
         }).to(descRef.current, {
             autoAlpha: 0,
             scale: 0.5,
@@ -68,8 +74,9 @@ export default function Artwork({
 
         return () => {
             t.kill()
+            tl.kill()
         }
-    }, [artwork, first])
+    }, [artwork, first, isMobile])
 
     return <div className={'artwork-container' + (first ? '' : ' absolute-container')} ref={containerRef} >
             <div className='artwork-pictures'>

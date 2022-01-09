@@ -4,12 +4,15 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import './index.css';
 import CursorContextProvider from './context/CursorContext';
+import MobileContextProvider from './context/MobileContext';
 
 ReactDOM.render(
   <React.StrictMode>
-    <CursorContextProvider>
-      <App />
-    </CursorContextProvider>
+    <MobileContextProvider>
+      <CursorContextProvider>
+        <App />
+      </CursorContextProvider>
+    </MobileContextProvider>
   </React.StrictMode>,
   document.getElementById('root')
 );

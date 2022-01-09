@@ -1,4 +1,5 @@
 import ArtworkData from "./classes/ArtworkData"
+import { getHeight } from "./context/MobileContext"
 
 const Artworks = [
     {
@@ -34,24 +35,26 @@ const Artworks = [
 const animationSpace = 1.5
 const startAnimationSpace = 1
 
-export function getTotalArtworksHeight(vh) {
-    let h = startAnimationSpace * window.innerHeight
+export function getTotalArtworksHeight(isMobile) {
+    let h = isMobile ? 0 : startAnimationSpace
+
     for (let p of Artworks) {
-        h += vh*(p.vh+animationSpace)
+        h += p.vh+animationSpace
     }
-    return h
+
+    return h * getHeight()
 }
 
 
-export default function getArtworks() {
+export default function getArtworks(isMobile) {
     let projects = []
-    let offset = startAnimationSpace * window.innerHeight
+    let offset = isMobile ? 0 : startAnimationSpace
 
-    console.log('getArtworks()')
+    console.log('getArtworks()', getHeight())
 
     Artworks.forEach(p => {
-        projects.push(new ArtworkData(p, offset))
-        offset += (p.vh+animationSpace) * window.innerHeight
+        projects.push(new ArtworkData(p, offset * getHeight()))
+        offset += p.vh+animationSpace
     })
 
     return projects

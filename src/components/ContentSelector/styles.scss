@@ -6,7 +6,7 @@
     justify-content: center;
     flex-grow: 1;
     align-items: center;
-    font-size: 1.2em;
+    font-size: min(6vw, 1.2em);
     font-family: 'Antic Slab', sans-serif;
     margin-inline: auto;
 }
@@ -16,7 +16,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    transform: translateY(-100%);
+    // transform: translateY(-100%);
 
     opacity: 0.5;
     transition: 0.25s;

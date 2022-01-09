@@ -1,3 +1,4 @@
+@import '../../App.scss';
 @import url('https://fonts.googleapis.com/css2?family=Antic+Slab&family=Nanum+Gothic+Coding&family=Playfair+Display:wght@700&family=Unica+One&display=swap');
 
 .artwork-container {
@@ -6,6 +7,10 @@
     display: flex;
     align-items: center;
     justify-content: center;
+
+    @media (max-width: $mobile-break) {
+        flex-direction: column-reverse;
+    }
 }
 
 .artwork-container.absolute-container {
@@ -22,6 +27,11 @@
     flex: 2;
     display: flex;
     flex-direction: column;
+
+    @media (max-width: $mobile-break) {
+        margin-left: 7vw;
+        margin-right: 7vw;
+    }
 }
 
 .artwork-name {
@@ -30,16 +40,25 @@
     font-family: 'Nanum Gothic Coding';
     height: 20vh;
 
-    > div > div > div { // Needed to animate Artwork Name with GSAP and TextSplit
-        opacity: 0;
+    // > div > div > div { // Needed to animate Artwork Name with GSAP and TextSplit
+    //     opacity: 0;
+    // }
+
+    @media (max-width: $mobile-break) {
+        font-size: 10vw;
+        height: 5vh;
     }
 }
 
 .artwork-desc {
-    opacity: 0;
+    // opacity: 0;
     margin-top: 5vh;
     font-size: 1.5vw;
     text-align: justify;
+
+    @media (max-width: $mobile-break) {
+        font-size: 4vw;
+    }
 }
 
 .artwork-button {
@@ -68,4 +87,8 @@
     position: relative;
     min-height: 100%;
     flex: 3;
+
+    @media (max-width: $mobile-break) {
+        min-height: 0;
+    }
 }

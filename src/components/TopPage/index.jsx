@@ -3,7 +3,9 @@ import { useEffect, useRef } from "react";
 import { FaChevronDown } from "react-icons/fa";
 import { SplitText } from '../../libraries/Split3.min'
 import ContentSelector from "../ContentSelector";
+import useMobileDetect from 'use-mobile-detect-hook';
 import './styles.scss'
+import { useLayoutEffect } from "react/cjs/react.development";
 
 export const scrollTrigger = {
     trigger: '#name',
@@ -17,7 +19,9 @@ export default function TopPage({
     setCurrent
 }) {   
     const showArtworkRef = useRef()
-    useEffect(() => {
+    const isMobile = useMobileDetect().isMobile()
+
+    useLayoutEffect(() => {
         let name = new SplitText("#name")
         let lastname = new SplitText("#lastname")
 
@@ -86,17 +90,25 @@ export default function TopPage({
             letterSpacing: '0.3vw',
         })
     }, [])
-    
-    return <div className="top">    
-        <div className="name" id="name">Alexandre</div>
-        <div className="name" id="lastname">Bizord</div>
-        <div className="title" id="title">Digital Artist & Developer</div>
-        <ContentSelector current={current} setCurrent={setCurrent} />
-        <div className="show-artworks" ref={showArtworkRef}>
-            <p onClick={() => {
-                gsap.to(window, {duration: 0.75, scrollTo:{y: "#content", offsetY: -300}, ease:'power2'});
-            }}>Scroll down</p>
+
+    function buildScrollDownButton() {
+        return <div className="show-artworks" ref={showArtworkRef}>
+            { isMobile ? null :
+                <p onClick={() => {
+                    gsap.to(window, {duration: 0.75, scrollTo:{y: "#content", offsetY: -300}, ease:'power2'});
+                }}>Scroll down</p>
+            }
             <FaChevronDown />
         </div> 
+    }
+    
+    return <div className="top">    
+        <div className="name-container">
+            <div className="name" id="name">Alexandre</div>
+            <div className="name" id="lastname">Bizord</div>
+            <div className="title" id="title">Digital Artist & Developer</div>
+        </div>
+        <ContentSelector current={current} setCurrent={setCurrent} />
+        { buildScrollDownButton() }
     </div>
 }
