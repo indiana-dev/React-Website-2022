@@ -1,5 +1,5 @@
 import './styles.scss'
-import { useEffect, useRef } from 'react'
+import { useLayoutEffect, useRef } from 'react'
 import gsap from 'gsap/all'
 
 export default function ImageSlider({
@@ -9,7 +9,7 @@ export default function ImageSlider({
 }) {
     const slider = useRef()
 
-    useEffect(() => {
+    useLayoutEffect(() => {
         const vh = window.innerHeight
         const elmHeight = slider.current.clientHeight
 

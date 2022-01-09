@@ -1,5 +1,5 @@
 import gsap from "gsap/all"
-import { useEffect, useRef } from "react"
+import { useLayoutEffect, useRef } from "react"
 
 export default function AnimatedImage({
     src,
@@ -14,7 +14,7 @@ export default function AnimatedImage({
 }) {
     const ref = useRef()
 
-    useEffect(() => {
+    useLayoutEffect(() => {
         let offset = project.offset/window.innerHeight*100*0
         let startDistance = 120 + start*project.vh*100 + offset
         let endDistance = (1-end)*100*project.vh + offset

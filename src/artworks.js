@@ -1,3 +1,5 @@
+import ArtworkData from "./classes/ArtworkData"
+
 const Artworks = [
     {
         name: 'Luminous Fantasy',
@@ -29,4 +31,28 @@ const Artworks = [
     // },
 ]
 
-export default Artworks
+const animationSpace = 1.5
+const startAnimationSpace = 1
+
+export function getTotalArtworksHeight(vh) {
+    let h = startAnimationSpace * window.innerHeight
+    for (let p of Artworks) {
+        h += vh*(p.vh+animationSpace)
+    }
+    return h
+}
+
+
+export default function getArtworks() {
+    let projects = []
+    let offset = startAnimationSpace * window.innerHeight
+
+    console.log('getArtworks()')
+
+    Artworks.forEach(p => {
+        projects.push(new ArtworkData(p, offset))
+        offset += (p.vh+animationSpace) * window.innerHeight
+    })
+
+    return projects
+}

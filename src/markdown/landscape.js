@@ -14,9 +14,9 @@ The program generates a \`.svg\` file that can be opened in a browser to see the
 This extension stands for _Scalable Vector Graphics_ and means that it can be zoomed in and out without any loss of detail, as opposite to an image file.
 
 <div class="image-list" style="text-align:center;">
-  <img class="img-expand" src="assets/images/landscape/ls1.png" width="300px" height=""/> 
-  <img class="img-expand" src="assets/images/landscape/ls2.png" width="300px" height=""/> 
-  <img class="img-expand" src="assets/images/landscape/ls5.png" width="300px" height=""/> 
+  <img class="img-expand" src="assets/images/landscape/ls1.png" width="30%" height=""/> 
+  <img class="img-expand" src="assets/images/landscape/ls2.png" width="30%" height=""/> 
+  <img class="img-expand" src="assets/images/landscape/ls5.png" width="30%" height=""/> 
 </div>
 
 

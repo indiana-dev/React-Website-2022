@@ -3,6 +3,7 @@ import { useEffect, useRef } from 'react'
 import { FaArrowCircleLeft } from 'react-icons/fa'
 import ReactMarkdown from 'react-markdown'
 import rehypeRaw from 'rehype-raw'
+import Footer from '../Footer'
 import './styles.scss'
 
 export default function ProjectDetails({
@@ -84,6 +85,7 @@ export default function ProjectDetails({
                     </div>
                 </div> : null }
         </div>
+        <Footer />
         <div className='project-details-back-button' ref={backBtnRef} onClick={() => setShowDetails(false) }>
             <FaArrowCircleLeft />
         </div>

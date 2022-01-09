@@ -1,5 +1,5 @@
 import gsap from 'gsap/all'
-import { useEffect, useRef } from 'react'
+import { useLayoutEffect, useRef } from 'react'
 import ProjectASL from './ProjectASL'
 import ProjectCausality from './ProjectCausality'
 import ProjectJetpack from './ProjectJetpack'
@@ -37,7 +37,7 @@ export default function Project({
         })
     }
 
-    useEffect(() => {
+    useLayoutEffect(() => {
         const duration = 0.3
         const stagger = 0.1
 

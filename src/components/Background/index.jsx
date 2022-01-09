@@ -5,12 +5,12 @@ import { Canvas } from '@react-three/fiber'
 import { useState, useRef } from 'react'
 import { Matrix4, Vector3 } from 'three'
 import { Color } from 'three'
-import ScrollTrigger from 'gsap/ScrollTrigger';
 import FragmentShader from './fragment'
 import gsap from 'gsap/all';
 import './styles.scss'
+import { useLayoutEffect } from 'react/cjs/react.development';
 
-const base_speed = 0.02
+const base_speed = 0.04
 
 function radians( degrees ) {
     return degrees * Math.PI / 180.0;
@@ -60,7 +60,7 @@ class Camera {
         this.up = this.right.clone().cross(this.front).normalize()
 
         let abs = Math.abs(this.pitch%360)
-        let upsideDown = abs >= 90 && abs <= 270
+        let upsideDown = abs > 90 && abs < 270
 
         this.viewMatrix = lookAt(this.pos.clone(), this.pos.clone().add(this.front), upsideDown ? this.up.clone().negate() : this.up.clone()).transpose()
     }
@@ -72,7 +72,8 @@ const ColorShiftMaterial = shaderMaterial({
         view_matrix: undefined, 
         camPos: [1.4, 1.5, 1.6], 
         uResolution: undefined, 
-        progress: 0
+        progress: 0,
+        animationProgress: 0,
     }, `
       varying vec2 vUv;
 
@@ -87,7 +88,8 @@ extend({ ColorShiftMaterial })
 
 function Render({
     current,
-    showDetails
+    showDetails,
+    projects
 }) {
     const [resolution, setResolution] = useState([window.innerWidth, window.innerHeight])
     const timeRef = useRef(null)
@@ -95,37 +97,52 @@ function Render({
     let cam = camera.current
 
     useEffect(() => {
-        console.log('Current', current)
         const animDuration = 0.5
         if (current === 1) gsap.to(timeRef.current, {progress: 1, duration: animDuration, ease: 'power2.inOut'})
         else if (current === 0) gsap.to(timeRef.current, {progress: 0, duration: animDuration, ease: 'power2.inOut'})
     }, [current])
 
+    useLayoutEffect(() => {
+        let anims = []
+
+        for (let [i, p] of Object.entries(projects)) {
+            let a = gsap.fromTo(timeRef.current, {
+                animationProgress: Number(i)
+            }, {
+                scrollTrigger: {
+                    trigger: '.content',
+                    start: p.offset,
+                    end: '+=100vh',
+                    toggleActions: 'restart none none reverse',
+                },
+                animationProgress: Number(i)+1,
+                duration: 1.5,
+                ease: 'power1.in',
+                immediateRender: false,
+            })
+            anims.push(a)
+        }
+
+        return () => {
+            for (let a of anims) a.kill()
+        }
+    }, [projects])
+
     useFrame(({clock}) => {
         timeRef.current.time = clock.getElapsedTime()
 
-        cam.pitch -= Math.abs(cam.vel.z) <= base_speed ? 0. : cam.vel.z
         cam.updateViewMatrix()
         timeRef.current.view_matrix = cam.viewMatrix
 
-        cam.pos.add(cam.front.clone().normalize().multiplyScalar(0.1+cam.vel.z))
+        cam.pos.add(cam.front.clone().normalize().multiplyScalar(cam.vel.z))
 
         if (Math.abs(cam.vel.z) > base_speed) {
-            cam.vel.z *= 0.98
+            cam.vel.z *= 0.99
         }
     })
 
-    useEffect(() => {
-        ScrollTrigger.create({
-            onUpdate: (self) => {
-                const max = 0.25
-                let vel = self.getVelocity()
-                vel = Math.sqrt(Math.abs(vel))*Math.sign(vel)*0.0005
-        
-                cam.vel.z = Math.max(Math.min(cam.vel.z+vel, max), -max)
-            }    
-        })
-    
+    useEffect(() => {   
+        console.log('Background window resize no dependency') 
         function windowsResize() {
             setResolution([window.innerWidth, window.innerHeight])
         }
@@ -135,7 +152,7 @@ function Render({
         return () => {
             window.removeEventListener('resize', windowsResize)
         }
-    }, [cam])
+    }, [])
 
     console.log('Background Render')
     return <OrthographicCamera makeDefault args={[-1, 1, 1, -1, 0, 1]}>
@@ -147,6 +164,7 @@ function Render({
                 view_matrix={cam.viewMatrix}
                 uResolution={resolution} 
                 progress={0}
+                animationProgress={0}
                 ref={timeRef} 
             />
         </mesh>
@@ -155,11 +173,12 @@ function Render({
 
 export default function Background({
     current,
-    showDetails
+    showDetails,
+    projects
 }) {
     return <div className="bg">
         <Canvas>
-            <Render current={current} showDetails={showDetails} />
+            <Render current={current} showDetails={showDetails} projects={projects} />
         </Canvas>
     </div>
 }

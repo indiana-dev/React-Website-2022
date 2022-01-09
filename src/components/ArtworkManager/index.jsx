@@ -1,30 +1,22 @@
 import ScrollTrigger from "gsap/ScrollTrigger";
-import { useEffect, useRef } from "react";
-import Artworks from "../../artworks";
+import { useLayoutEffect, useRef } from "react";
 import Artwork from "../Artwork";
-import ArtworkData from '../../classes/ArtworkData'
 import './styles.scss'
 import Project from "../Project";
-import getProjects from "../../projects";
 
 export default function ArtworkManager({
     current,
-    setShowDetails
+    setShowDetails,
+    projects,
+    artworkManagerHeight
 }) {  
     const ref = useRef()
-    const projects = useRef()
 
-    if (!projects.current) projects.current = getProjects()
-
-    useEffect(() => {        
-        const getTotalHeight = () => {
-            return ([Artworks, projects.current][current].reduce((a, b) => (a.vh ?? a) + b.vh) + 0.5) * window.innerHeight
-        }
-        
+    useLayoutEffect(() => {                
         // Main Content Pinning
         let pin = ScrollTrigger.create({
             trigger: ref.current,
-            end: "+=" + getTotalHeight(),
+            end: "+=" + artworkManagerHeight,
             pin: true,
             anticipatePin: true,
         });
@@ -32,30 +24,19 @@ export default function ArtworkManager({
         return () => {
             pin.kill()
         }
-    }, [current])
-        
+    }, [artworkManagerHeight])
     
     function buildArtworks() {
-        const vh = window.innerHeight
-        let cumulated = 0
-        let artworks = []
-
-        for (let [i, p] of Object.entries(Artworks)) {
-            artworks.push(
-                <Artwork 
-                    // eslint-disable-next-line eqeqeq
-                    first={i==0} 
-                    artwork={new ArtworkData(p, cumulated, ref)} 
-                    key={i}
-                />)
-            cumulated += p.vh * vh
-        }
-
-        return artworks
+        return projects.map((p, i) => 
+            <Artwork 
+                first={i==='0'} 
+                artwork={p} 
+                key={i}
+            />)
     }
 
     function buildProjects() {
-        return projects.current.map((p, i) => 
+        return projects.map((p, i) => 
             <Project 
                 first={i==='0'} 
                 project={p} 

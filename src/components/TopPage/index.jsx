@@ -32,6 +32,7 @@ export default function TopPage({
             opacity: 1,
             x: 0,
             stagger: 0.02, 
+            delay: 0.1,
         })
 
         // First Name Animation Start
@@ -43,6 +44,7 @@ export default function TopPage({
             x: 0,
             stagger: 0.02, 
             ease:"circ",
+            delay: 0.2,
             onComplete: () => {
                 // First Name Scrub Animation
                 gsap.to(wordA, {

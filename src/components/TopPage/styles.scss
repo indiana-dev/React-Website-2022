@@ -17,16 +17,17 @@
     text-align: left;
     font-family: 'Unica One', cursive;
     margin: 0 15vh;
+    mix-blend-mode: difference;
 }
 
 .title {
     font-size: 1em;
     padding-right: 5em;
-    // text-align: end;
     margin: 0 16vh;
     white-space: nowrap;
     font-family: 'Antic Slab', sans-serif;
     color: #ffc1c1;
+    mix-blend-mode: difference;
 }
 
 .show-artworks {
@@ -37,6 +38,7 @@
     align-items: center;
     width: 100%;
     font-size: 0.6em;
+    mix-blend-mode: difference;
 
     p {
         font-family: 'Antic Slab', sans-serif;

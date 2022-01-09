@@ -1,5 +1,5 @@
 import gsap, { SlowMo } from "gsap/all"
-import { useEffect, useRef } from "react"
+import { useLayoutEffect, useRef } from "react"
 import './styles.scss'
 
 gsap.registerPlugin(SlowMo)
@@ -9,7 +9,7 @@ export default function VideoSlider({
 }) {
     const slider = useRef()
 
-    useEffect(() => {
+    useLayoutEffect(() => {
         let tl = new gsap.timeline({
             scrollTrigger: artwork.scrollTrigger({scrub: true})
         })

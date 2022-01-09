@@ -1,5 +1,5 @@
 import gsap from 'gsap/all'
-import { useEffect, useRef } from 'react'
+import { useLayoutEffect, useRef } from 'react'
 import { SplitText } from '../../libraries/Split3.min'
 import VideoSlider from '../VideoSlider'
 import ImageSlider from '../ImageSlider'
@@ -13,27 +13,20 @@ export default function Artwork({
     const nameRef = useRef()
     const descRef = useRef()
 
-    useEffect(() => {
+    useLayoutEffect(() => {
         let nameChars = new SplitText(nameRef.current).chars
 
         let t = new gsap.timeline({
             scrollTrigger: artwork.scrollTrigger({
                 toggleActions: 'restart none none none',
                 onLeave: () => {
-                    if (t.reversed()) t.play('Appear')
-                    else t.resume('Appear')
+                    t.play('Appear')
                 },
                 onEnterBack: () => {
-                    t.reverse('Disappear')
+                    t.reverse(0)
                 },
                 onLeaveBack: () => {
-                    if (t.reversed()) t.resume()
-                    else t.reverse()
-                },
-                onUpdate: (u) => {
-                    let currentDisplay = containerRef.current.style.display
-                    if (currentDisplay === 'none' && u.isActive) containerRef.current.style.display = 'flex'
-                    else if (currentDisplay !== 'none' && !u.isActive) containerRef.current.style.display = 'none'
+                    t.reverse('Appear')
                 },
             })
         })
@@ -45,8 +38,7 @@ export default function Artwork({
             stagger: 0.02,
             duration: 0.3,
             ease: 'expo'
-        }
-        )
+        })
         .addPause()
         .addLabel('Appear')
         .to(nameChars, {
@@ -63,7 +55,7 @@ export default function Artwork({
             scrollTrigger: artwork.scrollTrigger({scrub: 2})
         })
         tl.fromTo(descRef.current, {
-            y: 300,
+            y: 100,
         }, {
             y: 0,
             autoAlpha: 1,
@@ -73,8 +65,6 @@ export default function Artwork({
             autoAlpha: 0,
             scale: 0.5,
         })
-
-        if (!first) containerRef.current.style.display = 'none'
 
         return () => {
             t.kill()
