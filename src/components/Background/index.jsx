@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useLayoutEffect } from 'react';
 import { OrthographicCamera, shaderMaterial } from '@react-three/drei'
 import { extend, useFrame } from '@react-three/fiber'
 import { Canvas } from '@react-three/fiber'
@@ -8,7 +8,6 @@ import { Color } from 'three'
 import FragmentShader from './fragment'
 import gsap from 'gsap/all';
 import './styles.scss'
-import { useLayoutEffect } from 'react/cjs/react.development';
 
 const base_speed = 0.04
 

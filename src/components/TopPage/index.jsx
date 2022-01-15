@@ -1,11 +1,10 @@
 import gsap from "gsap/all";
-import { useRef } from "react";
+import { useRef, useLayoutEffect } from "react";
 import { FaChevronDown } from "react-icons/fa";
 import { SplitText } from '../../libraries/Split3.min'
 import ContentSelector from "../ContentSelector";
 import useMobileDetect from 'use-mobile-detect-hook';
 import './styles.scss'
-import { useLayoutEffect } from "react/cjs/react.development";
 
 export const scrollTrigger = {
     trigger: '#name',
